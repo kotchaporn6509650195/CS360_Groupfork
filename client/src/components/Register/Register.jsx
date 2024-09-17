@@ -13,15 +13,17 @@ const Register = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:1337/api/auth/local/register', {
+            const response = await fetch('http://localhost:1337/api/accounts', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    username,
-                    email,
-                    password,
+                    data: {
+                        username,
+                        email,
+                        password
+                      }
                 }),
             });
 
