@@ -14,7 +14,7 @@
 
 ## Project Goal
 
-Ecomify เป็นเว็บแอปพลิเคชันอีคอมเมิร์ซสำหรับ ___ วัตถุประสงค์ของแอปนี้คือการ ___ Ecomify แก้ไขปัญหา ___ แนวคิดของ Ecomify คือการ___ <เด่วมาทำ>
+Ecomify is an e-commerce web application designed for businesses that want to easily create and manage their online stores. The purpose of this app is to allow business owners to efficiently and conveniently manage their online stores. Ecomify solves the problem of the complexity of managing online stores and the high costs associated with using large e-commerce platforms. The concept of Ecomify is to make e-commerce simple and accessible for everyone.
 
 ### Features
 
