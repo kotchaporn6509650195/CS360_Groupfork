@@ -35,13 +35,13 @@ Ecomify เป็นเว็บแอปพลิเคชันอีคอม
 ## How to deploy and run the project manually
 
 1.สร้าง AWS EC2
-    **SSH**:
+**SSH**:
    - **Type**: SSH
    - **Protocol**: TCP
    - **Port Range**: 22
    - **Source**: `0.0.0.0/0` 
 
-    **Custom TCP**:
+   **Custom TCP**:
    - **Type**: Custom TCP Rule
    - **Protocol**: TCP
    - **Port Range**: 1337
