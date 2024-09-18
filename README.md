@@ -35,6 +35,7 @@ Ecomify เป็นเว็บแอปพลิเคชันอีคอม
 ## How to deploy and run the project manually
 
 1.สร้าง AWS EC2
+
 **SSH**:
    - **Type**: SSH
    - **Protocol**: TCP
