@@ -34,9 +34,60 @@ Ecomify เป็นเว็บแอปพลิเคชันอีคอม
   
 ## How to deploy and run the project manually
 
-1.
-2.
-3.
+1.สร้าง AWS EC2
+    **SSH**:
+   - **Type**: SSH
+   - **Protocol**: TCP
+   - **Port Range**: 22
+   - **Source**: `0.0.0.0/0` 
+
+    **Custom TCP**:
+   - **Type**: Custom TCP Rule
+   - **Protocol**: TCP
+   - **Port Range**: 1337
+   - **Source**: `0.0.0.0/0`
+
+   **Custom TCP**:
+   - **Type**: Custom TCP Rule
+   - **Protocol**: TCP
+   - **Port Range**: 3000
+   - **Source**: `0.0.0.0/0`
+2.ติดตั้ง Node.js และ npm
+```bash
+cd ~
+sudo yum update -y
+...
+sudo yum groupinstall 'Development Tools' -y
+...
+curl -fsSL https://rpm.nodesource.com/setup_20.x | sudo bash -
+sudo yum install -y nsolid
+...
+node -v && npm -v
+```
+3.ติดตั้ง Git
+```bash
+sudo yum install -y git
+...
+git --version
+```
+4.การนำเข้า Project จาก GitHub
+```bash
+git clone https://github.com/techit6509650419/CS360_Project.git
+...
+cd CS360_Project
+```
+5.ติดตั้ง dependencies ของไฟล์ backend
+```bash
+cd backend
+...
+npm install
+```
+5.ติดตั้ง dependencies ของไฟล์ client
+```bash
+cd client
+...
+npm install
+```
   
 ## How to deploy and run the project using the provided bash script [Specify the bash script path in the repo]
 
