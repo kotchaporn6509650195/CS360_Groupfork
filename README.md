@@ -89,6 +89,50 @@ cd client
 ...
 npm install
 ```
+6.ติดตั้ง PM2 Runtime
+```bash
+cd ~
+...
+npm install pm2@latest -g
+```
+7.แก้ไข ecosystem.config.js
+```bash
+pm2 init
+...
+sudo nano ecosystem.config.js
+...
+#เพิ่มข้อมูล
+module.exports = {
+  apps: [
+    {
+      name: 'ชื่อโปรเจกต์', 
+      cwd: '/home/ec2-user/เส้นทางไปยังโปรเจกต์', 
+      script: 'yarn', 
+      args: 'start', 
+      env: {
+        APP_KEYS: 'Key จาก .env ในโปรเจกต์ที่รันบนเครื่องของเรา',
+        API_TOKEN_SALT: 'Salt จาก .env ในโปรเจกต์ที่รันบนเครื่องของเรา',
+        ADMIN_JWT_SECRET: 'Admin Secret จาก .env ในโปรเจกต์ที่รันบนเครื่องของเรา',
+        JWT_SECRET: 'Secret จาก .env ในโปรเจกต์ที่รันบนเครื่องของเรา',
+        NODE_ENV: 'production',
+        DATABASE_CLIENT: 'sqlite',
+        DATABASE_FILENAME: '.tmp/data.db'
+      },
+    },
+  ],
+};
+```
+8. Start PM2 ให้ Strapi ทำงาน 
+```bash
+pm2 start ecosystem.config.js
+```
+9. Start Client
+```bash
+cd client
+...
+npm start
+```
+
   
 ## How to deploy and run the project using the provided bash script [Specify the bash script path in the repo]
 
