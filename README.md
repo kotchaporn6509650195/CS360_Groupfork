@@ -136,8 +136,14 @@ npm start
   
 ## How to deploy and run the project using the provided bash script [Specify the bash script path in the repo]
 
-1.
-2.
-3.
+1.การนำเข้า Bash Script จาก GitHub
+2.ตั้งค่าสิทธิ์ให้กับไฟล์สคริปต์
+```bash
+chmod +x setup-node-server.sh
+```
+3.รันสคริปต์
+```bash
+./Deploy.sh
+```
   
 [ภาพ screen capture ของหน้าเว็บแอปพลิเคชันซึ่ง deploy ไว้บน EC2]
