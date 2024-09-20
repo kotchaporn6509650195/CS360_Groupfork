@@ -158,7 +158,9 @@ npm start
 2.สร้างไฟล์ Bash Script
 ```bash
 touch namefile.sh
-
+...
+nano namefile.sh
+...
 #เพิ่มข้อมูล
 #!/bin/bash
 
