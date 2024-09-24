@@ -93,7 +93,7 @@ npm install
 ```bash
 cd ~
 ...
-npm install pm2@latest -g
+sudo npm install pm2@latest -g
 ```
 7.แก้ไข ecosystem.config.js
 ```bash
@@ -107,7 +107,7 @@ module.exports = {
     {
       name: 'ชื่อโปรเจกต์', 
       cwd: '/home/ec2-user/เส้นทางไปยังโปรเจกต์', 
-      script: 'yarn', 
+      script: 'npm', 
       args: 'start', 
       env: {
         APP_KEYS: 'Key จาก .env ในโปรเจกต์ที่รันบนเครื่องของเรา',
