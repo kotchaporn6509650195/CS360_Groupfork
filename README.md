@@ -85,6 +85,8 @@ npm install
 ```
 5.ติดตั้ง dependencies ของไฟล์ client
 ```bash
+cd ..
+...
 cd client
 ...
 npm install
@@ -128,6 +130,8 @@ pm2 start ecosystem.config.js
 ```
 9. Start Client
 ```bash
+cd CS360_Project
+...
 cd client
 ...
 npm start
