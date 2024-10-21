@@ -307,3 +307,20 @@ chmod +x namefile.sh
 [ภาพ screen capture ของหน้าเว็บแอปพลิเคชันซึ่ง deploy ไว้บน EC2]
 ![image](https://github.com/user-attachments/assets/9ecca414-cedc-40fc-b622-29b7ff8e3ba7)
 
+## Unit and Integration Testing Overview
+...
+## Setting Up Tests
+...
+## Running Tests
+...
+## Test File Structure
+...
+## Test Coverage
+The tests in this repository cover the following functionality:
+-
+-
+-
+## Viewing Test Results
+...
+## Adding New Tests
+...
