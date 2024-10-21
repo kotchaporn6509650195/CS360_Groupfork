@@ -5,7 +5,7 @@ import Home from './components/Home/Home';
 import Category from './components/Category/Category';
 import SingleProduct from './components/SingleProduct/SingleProduct';
 import Login from './components/Login/Login';
-import Register from './components/Register/Register'; // Import Register
+import Register from './components/Register/Register';
 import Newsletter from './components/Footer/Newsletter/Newsletter';
 import AppContext from './utils/context';
 
@@ -19,7 +19,7 @@ function App() {
                     <Route path="/category/:id" element={<Category />} />
                     <Route path="/product/:id" element={<SingleProduct />} />
                     <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} /> {/* Added route for Register */}
+                    <Route path="/register" element={<Register />} /> 
                     <Route path="/newsletter" element={<Newsletter />} />
                 </Routes>
                 <Footer />
