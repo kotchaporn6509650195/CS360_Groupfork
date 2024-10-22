@@ -42,7 +42,7 @@ const Register = () => {
     const checkUsername = async () => {
         if (!username) return; // Skip check if username is empty
         try {
-            const response = await fetch(`http://localhost:1337/api/accounts?filters[username][$eq]=${username}`);
+            const response = await fetch(process.env.REACT_APP_DEV_URL + `/api/accounts?filters[username][$eq]=${username}`);
             const data = await response.json();
 
             if (!response.ok) {
@@ -109,7 +109,7 @@ const Register = () => {
 
         // Register the user
         try {
-            const response = await fetch('http://localhost:1337/api/accounts', {
+            const response = await fetch(process.env.REACT_APP_DEV_URL + '/api/accounts', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
