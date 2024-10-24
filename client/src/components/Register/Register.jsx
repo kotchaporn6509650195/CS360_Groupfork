@@ -11,6 +11,7 @@ const Register = () => {
     const [usernameError, setUsernameError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [emailError, setEmailError] = useState('');
+    const [confirmPasswordError, setConfirmPasswordError] = useState('');
     const navigate = useNavigate();
 
     // Password validation function
@@ -25,6 +26,10 @@ const Register = () => {
         const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
         if (!specialCharRegex.test(password)) {
             return 'Password must contain at least one special character';
+        }
+        const numberRegex = /\d/; // Check for at least one numeric character
+        if (!numberRegex.test(password)) {
+            return 'Password must contain at least one number';
         }
         return '';
     };
@@ -59,15 +64,17 @@ const Register = () => {
         }
     };
 
+
     // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         // Reset error messages
         setError('');
         setUsernameError('');
         setEmailError('');
         setPasswordError('');
+        setConfirmPasswordError('');
 
         // Check for empty fields
         if (!username) {
@@ -80,7 +87,7 @@ const Register = () => {
             setPasswordError('Password is required');
         }
         if (!confirmPassword) {
-            setPasswordError((prev) => prev ? prev : 'Confirm password is required');
+            setConfirmPasswordError('Confirm password is required');
         }
 
         // Return early if there are validation errors
@@ -104,12 +111,13 @@ const Register = () => {
 
         if (password !== confirmPassword) {
             setPasswordError('Passwords do not match');
+            setConfirmPasswordError('Passwords do not match');
             return;
         }
 
         // Register the user
         try {
-            const response = await fetch(process.env.REACT_APP_DEV_URL + '/api/accounts', {
+            const response = await fetch(`${process.env.REACT_APP_DEV_URL}/api/accounts`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -138,7 +146,7 @@ const Register = () => {
 
     // Handle onBlur for username check
     const handleUsernameBlur = () => {
-        checkUsername(); // Call function to check username availability
+        checkUsername();
     };
 
     return (
@@ -152,7 +160,7 @@ const Register = () => {
                         id="username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        onBlur={handleUsernameBlur} // Validate username on blur
+                        onBlur={handleUsernameBlur}
                         required
                     />
                     {usernameError && <p className="error">{usernameError}</p>}
@@ -165,7 +173,7 @@ const Register = () => {
                         id="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        onBlur={() => setEmailError(validateEmail(email))} // Validate email on blur
+                        onBlur={() => setEmailError(validateEmail(email))}
                     />
                     {emailError && <p className="error">{emailError}</p>}
                 </div>
@@ -177,7 +185,7 @@ const Register = () => {
                         id="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        onBlur={() => setPasswordError(validatePassword(password))} // Validate password on blur
+                        onBlur={() => setPasswordError(validatePassword(password))}
                     />
                     {passwordError && <p className="error">{passwordError}</p>}
                 </div>
@@ -189,7 +197,15 @@ const Register = () => {
                         id="confirm-password"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
+                        onBlur={() => {
+                            if (password !== confirmPassword) {
+                                setConfirmPasswordError('Passwords do not match');
+                            } else {
+                                setConfirmPasswordError('');
+                            }
+                        }} 
                     />
+                    {confirmPasswordError && <p className="error">{confirmPasswordError}</p>}
                 </div>
 
                 {error && <p className="error">{error}</p>}
