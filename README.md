@@ -31,28 +31,27 @@ Ecomify is an e-commerce web application designed for businesses that want to ea
 - **Frontend:** React.js
 - **Hosting/Deployment:** AWS EC2
 - **Database:** SQLite
-  
+
+## Setting Up an EC2 Instance
+
+**Application and OS Images:** Amazon Linux 2023 AMI
+
+**Instance type : t2.micro**
+
+**Network setting :** create security group
+
+- Type: `SSH`, Protocol: `TCP`, Port Range `22`, Source: `0.0.0.0/0`
+- Type: `Custom TCP Rule`, Protocol: `TCP`, Port Range `1337`, Source: `0.0.0.0/0`
+- Type: `Custom TCP Rule`, Protocol: `TCP`, Port Range `3000`, Source: `0.0.0.0/0`
+
+**Configure storage:** 8 Gib gp3 Root volume    
+
 ## How to deploy and run the project manually
 
-1.สร้าง AWS EC2
-
-**SSH**:
-   - **Type**: SSH
-   - **Protocol**: TCP
-   - **Port Range**: 22
-   - **Source**: `0.0.0.0/0` 
-
-   **Custom TCP**:
-   - **Type**: Custom TCP Rule
-   - **Protocol**: TCP
-   - **Port Range**: 1337
-   - **Source**: `0.0.0.0/0`
-
-   **Custom TCP**:
-   - **Type**: Custom TCP Rule
-   - **Protocol**: TCP
-   - **Port Range**: 3000
-   - **Source**: `0.0.0.0/0`
+1.สร้าง AWS EC2 ตามที่ตั้งค่าไว้ และ Connect to EC2 Instance
+```bash
+ssh -i <your-key.pem> ec2-user@<your-ec2-instance-ip>
+```
 2.ติดตั้ง Node.js และ npm
 ```bash
 cd ~
@@ -140,25 +139,10 @@ npm start
   
 ## How to deploy and run the project using the provided bash script [Specify the bash script path in the repo]
 
-1.สร้าง AWS EC2
-**SSH**:
-   - **Type**: SSH
-   - **Protocol**: TCP
-   - **Port Range**: 22
-   - **Source**: `0.0.0.0/0` 
-
-   **Custom TCP**:
-   - **Type**: Custom TCP Rule
-   - **Protocol**: TCP
-   - **Port Range**: 1337
-   - **Source**: `0.0.0.0/0`
-
-   **Custom TCP**:
-   - **Type**: Custom TCP Rule
-   - **Protocol**: TCP
-   - **Port Range**: 3000
-   - **Source**: `0.0.0.0/0`
-
+1.สร้าง AWS EC2 ตามที่ตั้งค่าไว้ และ Connect to EC2 Instance
+```bash
+ssh -i <your-key.pem> ec2-user@<your-ec2-instance-ip>
+```
 2.สร้างไฟล์ Bash Script
 ```bash
 touch namefile.sh
