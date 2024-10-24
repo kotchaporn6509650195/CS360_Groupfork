@@ -36,7 +36,7 @@ Ecomify is an e-commerce web application designed for businesses that want to ea
 
 **Application and OS Images:** Amazon Linux 2023 AMI
 
-**Instance type : t2.micro**
+**Instance type :** t2.medium
 
 **Network setting :** create security group
 
