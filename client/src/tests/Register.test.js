@@ -41,7 +41,7 @@ describe('Register Component - Unit Tests', () => {
     test('shows error message for invalid email format', async () => {
         renderRegister();
         const emailInput = screen.getByLabelText(/Email/i);
-        
+
         fireEvent.change(emailInput, { target: { value: 'invalidEmailFormat' } });
         fireEvent.blur(emailInput); // Trigger the blur event
 
@@ -53,7 +53,7 @@ describe('Register Component - Unit Tests', () => {
     test('shows error for password less than 8 characters', async () => {
         renderRegister();
         const passwordInput = screen.getByLabelText('Password');
-        
+
         fireEvent.change(passwordInput, { target: { value: 'short' } });
         fireEvent.blur(passwordInput);
 
@@ -65,7 +65,7 @@ describe('Register Component - Unit Tests', () => {
     test('shows error for password without uppercase letter', async () => {
         renderRegister();
         const passwordInput = screen.getByLabelText('Password');
-        
+
         fireEvent.change(passwordInput, { target: { value: 'lowercasepassword' } });
         fireEvent.blur(passwordInput);
 
@@ -77,7 +77,7 @@ describe('Register Component - Unit Tests', () => {
     test('shows error for password without a number', async () => {
         renderRegister();
         const passwordInput = screen.getByLabelText('Password');
-        
+
         fireEvent.change(passwordInput, { target: { value: 'Password!' } });
         fireEvent.blur(passwordInput);
 
@@ -117,11 +117,11 @@ describe('Register Component - Integration Tests', () => {
 
     test('checks username availability', async () => {
         renderRegister();
-    
+
         const usernameInput = screen.getByLabelText(/Username/i);
         fireEvent.change(usernameInput, { target: { value: 'testuser' } });
         fireEvent.blur(usernameInput);
-    
+
         await waitFor(() => {
             const errorMessage = screen.queryByText(/Username is already taken/i);
             if (errorMessage) {
@@ -130,7 +130,7 @@ describe('Register Component - Integration Tests', () => {
                 expect(errorMessage).not.toBeInTheDocument(); // Username is available
             }
         });
-    }); 
+    });
 
     test('shows error when username is taken', async () => {
         mockFetchResponse({ data: [{ id: 1, username: 'takenUsername' }] });
