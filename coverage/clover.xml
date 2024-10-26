@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1729942956717" clover="3.2.0">
-  <project timestamp="1729942956717" name="All files">
+<coverage generated="1729943098400" clover="3.2.0">
+  <project timestamp="1729943098400" name="All files">
     <metrics statements="89" coveredstatements="76" conditionals="56" coveredconditionals="43" methods="13" coveredmethods="13" elements="158" coveredelements="132" complexity="0" loc="89" ncloc="89" packages="1" files="1" classes="1"/>
     <file name="Register.jsx" path="C:\Users\DELL\Documents\comsci\cs360\CS360_Project\client\src\components\Register\Register.jsx">
       <metrics statements="89" coveredstatements="76" conditionals="56" coveredconditionals="43" methods="13" coveredmethods="13"/>
