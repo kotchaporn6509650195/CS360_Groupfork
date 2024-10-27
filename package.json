@@ -45,12 +45,12 @@
     ]
   },
   "dependencies": {
+    "@strapi/plugin-i18n": "^4.15.0",
+    "@strapi/plugin-users-permissions": "^4.15.0",
+    "@strapi/strapi": "^4.15.0",
     "express": "^4.21.1",
     "react-router-dom": "^6.27.0",
     "sequelize": "^6.37.5",
-    "sqlite3": "^5.1.7",
-    "@strapi/strapi": "^4.15.0",
-    "@strapi/plugin-users-permissions": "^4.15.0",
-    "@strapi/plugin-i18n": "^4.15.0"
+    "sqlite3": "^5.1.7"
   }
 }

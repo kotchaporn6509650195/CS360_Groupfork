@@ -3,8 +3,6 @@ const app = require('../../backend/mockConfig/server'); // ปรับเส้
 const Account = require('../models/Account');
 const sequelize = require('../../backend/mockConfig/database'); // นำเข้าการตั้งค่า sequelize
 
-console.log('App loaded:', app);
-
 describe('Integration Tests for Account API', () => {
     beforeAll(async () => {
         
