@@ -299,7 +299,7 @@ chmod +x namefile.sh
 git clone -b develop https://github.com/techit6509650419/CS360_Project
 cd CS360_Project
 ```
-2.ติดตั้ง npm และ node.js
+2.ติดตั้ง npm node.js และสร้าง sqlite ใหม่
 ```bash
 npm install --force
 npm rebuild sqlite3 --force
@@ -367,21 +367,27 @@ nano package.json
   }
 }
 ```
-cd CS360_Project/client
-
-nano package.json
+4.เข้า Folder client
 ```bash
+cd CS360_Project/client
+```
+5.แก้ไขไฟล์ package.json
+```bash
+nano package.json
 //เปลี่ยน test เป็น
 "test": "jest --coverage"
 ```
+6.สร้าง Folder tests
+```bash
 mkdir CS360_Project/client/src/tests/
-
 cd CS360_Project/client/src/tests/
-
+```
+7.สร้าง file Register.test.js และเพิ่มโค้ด Automade Test Case
+```bash
 touch Register.test.js
 
 nano Register.test.js
-```bash
+
 //เพิ่ม Automade Test Case
 
 import React from 'react';
