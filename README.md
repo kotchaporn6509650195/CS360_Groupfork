@@ -304,7 +304,7 @@ cd CS360_Project
 npm install --force
 npm rebuild sqlite3 --force
 ```
-3.แก้ไขโค้ดทั้งหมดใน package
+3.แก้ไขโค้ดทั้งหมดใน package.json ใน Folder CS360_Project
 ```bash
 nano package.json
 
@@ -367,12 +367,13 @@ nano package.json
   }
 }
 ```
-#1.) ส่วนของ Front-ent (client)
+#1.) ส่วนของ Front-end (client)
+
 1.4. เข้า Folder client
 ```bash
 cd CS360_Project/client
 ```
-1.5. แก้ไขไฟล์ package.json
+1.5. แก้ไขไฟล์ package.json ใน Folder client
 ```bash
 nano package.json
 //เปลี่ยน test เป็น
@@ -383,7 +384,7 @@ nano package.json
 mkdir CS360_Project/client/src/tests/
 cd CS360_Project/client/src/tests/
 ```
-1.7. สร้าง file Register.test.js และเพิ่มโค้ด Automade Test Case
+1.7. สร้าง file Register.test.js และเพิ่มโค้ด Automated Test Case
 ```bash
 touch Register.test.js
 
@@ -572,12 +573,12 @@ cd ..
 
 cd ..
 ```
-1.9. run automated test front-end 
+1.9. run Automated test front-end 
 ```bash
 npm run test-fort
 ```
-# 2.) ส่วนของ backEnd
-2.1 สร้าง Folder tests
+#2.) ส่วนของ backEnd
+2.1 สร้าง Folder tests ใน Folder backEnd
 ```bash
 mkdir CS360_Project/backend/tests/
 cd CS360_Project/backend/tests/
@@ -740,7 +741,7 @@ describe('Integration Tests for Account API', () => {
 ```bash
 cd ..
 ```
-2.4 เพิ่มโค้ด ใน File package.json
+2.4 เพิ่มโค้ด ใน File package.json ใน Folder backEnd
 ```bash
 nano package.json
 //เพิ่มโค้ดเพิ่มเติม
