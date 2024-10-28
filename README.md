@@ -578,6 +578,7 @@ cd ..
 npm run test-fort
 ```
 #2.) ส่วนของ backEnd
+
 2.1 สร้าง Folder tests ใน Folder backEnd
 ```bash
 mkdir CS360_Project/backend/tests/
@@ -741,18 +742,18 @@ describe('Integration Tests for Account API', () => {
 ```bash
 cd ..
 ```
-2.4 เพิ่มโค้ด ใน File package.json ใน Folder backEnd
+2.4 เพิ่มโค้ด ใน File package.json ใน Folder backend
 ```bash
 nano package.json
 //เพิ่มโค้ดเพิ่มเติม
  "backend": "file:",
  "react-scripts": "^5.0.1",
 ```
-2.5 ออกจาก Folder back-end
+2.5 ออกจาก Folder backend
 ```bash
 cd ..
 ```
-2.6 run automated test back-end 
+2.6 run automated test backend 
 ```bash
 npm run test-back
 ```
