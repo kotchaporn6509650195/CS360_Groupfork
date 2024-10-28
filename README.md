@@ -293,6 +293,18 @@ chmod +x namefile.sh
 
 ## Unit and Integration Testing Overview
 ...
+สำหรับ Unit Testing
+
+ทำการทดสอบด้วยระบบ Register มีทั้งหมด 7 test case
+
+ซึ่งตรวจสอบว่าการสมัครสมาชิกนั้น ถูกต้องตามรูปแบบที่กำหนดไว้ หรือไม่
+
+ถ้าเกิดใส่ข้อมูลไม่ถูกต้องตามรูปแบบที่กำหนดก็จะมีข้อความแจ้งเตือนว่าผิดรูปแบบอย่างไร
+
+Integration Testing
+
+ทำการทดสอบด้วยระบบ Register มีทั้งหมด 7 test case
+
 ## Setting Up Tests
 1.ติดตั้ง project ของ team
 ```bash
