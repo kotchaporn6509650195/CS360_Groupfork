@@ -307,7 +307,7 @@ npm rebuild sqlite3 --force
 nano package.json
 
 //แก้โค้ด
-
+```bash
 {
   "devDependencies": {
     "@babel/preset-env": "^7.25.9",
@@ -366,15 +366,14 @@ nano package.json
     "sqlite3": "^5.1.7"
   }
 }
-
+```
 cd CS360_Project/client
 
 nano package.json
-
+```bash
 //เปลี่ยน test เป็น
-
 "test": "jest --coverage"
-
+```
 mkdir CS360_Project/client/src/tests/
 
 cd CS360_Project/client/src/tests/
@@ -382,7 +381,7 @@ cd CS360_Project/client/src/tests/
 touch Register.test.js
 
 nano Register.test.js
-
+```bash
 //เพิ่ม Automade Test Case
 
 import React from 'react';
@@ -557,7 +556,7 @@ describe('Register Component - Integration Tests', () => {
         });
     });
 });
-
+```
 cd ..
 
 cd ..
@@ -575,7 +574,7 @@ cd CS360_Project/backend/tests/
 touch account.test.js
 
 nano account.test.js
-
+```bash
 //เพิ่มโค้ด automade test
 
 const request = require('supertest');
@@ -725,16 +724,16 @@ describe('Integration Tests for Account API', () => {
         await sequelize.close(); // ปิดการเชื่อมต่อฐานข้อมูล
     });
 });
-
+```
 cd ..
 
 nano package.json
 
 //แก้ไขโค้ดเพิ่มเติม
-
+```bash
  "backend": "file:",
  "react-scripts": "^5.0.1",
-
+```
 cd ..
 
 npm run test-back
