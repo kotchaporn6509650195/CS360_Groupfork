@@ -18,7 +18,7 @@ const Login = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    identifier: username, // Use identifier for username or email
+                    identifier: username,
                     password,
                 }),
             });
