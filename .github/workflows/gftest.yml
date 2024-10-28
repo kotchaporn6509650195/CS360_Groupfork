@@ -1,4 +1,4 @@
-name: Node.js CI
+name: gf
 
 on:
   push:
@@ -24,5 +24,7 @@ jobs:
         cache: 'npm'
     - name: Install dependencies
       run: npm install --legacy-peer-deps
+    - name: Rebuild sqlite3
+      run: npm rebuild sqlite3
     - name: Run frontend tests
       run: npm test
