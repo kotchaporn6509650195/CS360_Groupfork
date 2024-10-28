@@ -759,7 +759,53 @@ npm run test-back
 ```
 
 ## Running Tests
-...
+1.ผลลัพธ์จากการ run frontend
+```bash
+> test-front
+> jest client/src/tests/Register
+
+ PASS  client/src/tests/Register.test.js
+  Register Component - Unit Tests
+    √ renders the register form (251 ms)                                                                           
+    √ shows error message for invalid email format (66 ms)                                                         
+    √ shows error for password less than 8 characters (58 ms)                                                      
+    √ shows error for password without uppercase letter (76 ms)                                                    
+    √ shows error for password without a number (42 ms)                                                            
+    √ shows error when passwords do not match (44 ms)                                                              
+    √ shows error when required fields are missing (54 ms)                                                         
+  Register Component - Integration Tests                                                                           
+    √ checks username availability (29 ms)                                                                         
+    √ shows error when username is taken (56 ms)                                                                   
+    √ successfully registers user and navigates to login (99 ms)                                                   
+                                                                                                                   
+Test Suites: 1 passed, 1 total
+Tests:       10 passed, 10 total
+Snapshots:   0 total
+Time:        6.688 s
+Ran all test suites matching /client\\src\\tests\\Register/i.
+```
+2.ผลลัพธ์จากการ run backend
+```bash
+> test-back
+> jest backend/tests/account.test.js
+
+ PASS  backend/tests/account.test.js
+  Integration Tests for Account API
+    √ should create a new account (112 ms)                                                                         
+    √ should update an existing account (34 ms)                                                                    
+    √ should retrieve all accounts (13 ms)                                                                         
+    √ should return 400 for missing required fields (9 ms)                                                         
+    √ should return 404 for updating a non-existing account (13 ms)                                                
+    √ should retrieve an account by ID (26 ms)                                                                     
+    √ should delete an existing account (39 ms)                                                                    
+    √ should return 404 for a non-existing account (23 ms)                                                         
+                                                                                                                   
+Test Suites: 1 passed, 1 total                                                                                     
+Tests:       8 passed, 8 total                                                                                     
+Snapshots:   0 total
+Time:        3.918 s, estimated 4 s
+Ran all test suites matching /backend\\tests\\account.test.js/i.
+```
 ## Test File Structure
 ...
 ## Test Coverage
