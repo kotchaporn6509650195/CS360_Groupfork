@@ -40,6 +40,6 @@ jobs:
 
     # Run test suite
     - name: Run test suite
-      run: npm test
+      run: npm run test-fort
     
-    - run: echo "This job's status is ${{ job.status }}."
+    - run: echo "This job's status is ${{ job.status }}.
