@@ -294,7 +294,7 @@ chmod +x namefile.sh
 ## Unit and Integration Testing Overview
 ...
 ## Setting Up Tests
-//คำสั่ง
+**คำสั่ง
 
 git clone -b develop https://github.com/techit6509650419/CS360_Project
 
@@ -307,6 +307,7 @@ npm rebuild sqlite3 --force
 nano package.json
 
 //แก้โค้ด
+
 {
   "devDependencies": {
     "@babel/preset-env": "^7.25.9",
@@ -383,6 +384,7 @@ touch Register.test.js
 nano Register.test.js
 
 //เพิ่ม Automade Test Case
+
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
@@ -557,17 +559,25 @@ describe('Register Component - Integration Tests', () => {
 });
 
 cd ..
+
 cd ..
+
 cd ..
+
 npm run test-fort
 
-//ส่วนของ backEnd
+**ส่วนของ backEnd
+
 mkdir CS360_Project/backend/tests/
+
 cd CS360_Project/backend/tests/
+
 touch account.test.js
+
 nano account.test.js
 
 //เพิ่มโค้ด automade test
+
 const request = require('supertest');
 const app = require('../../backend/mockConfig/server'); // ปรับเส้นทางให้ตรงกับแอป Express ของคุณ
 const Account = require('../models/Account');
@@ -719,7 +729,9 @@ describe('Integration Tests for Account API', () => {
 cd ..
 
 nano package.json
+
 //แก้ไขโค้ดเพิ่มเติม
+
  "backend": "file:",
  "react-scripts": "^5.0.1",
 
