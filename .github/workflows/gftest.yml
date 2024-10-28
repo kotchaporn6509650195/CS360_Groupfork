@@ -34,7 +34,7 @@ jobs:
 
     #Install project dependencies
     - name: Install project dependencies
-      run: npm install
+      run: npm install --force
 
     #Run test suite
     - name: Run test suite
