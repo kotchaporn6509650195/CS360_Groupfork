@@ -367,22 +367,23 @@ nano package.json
   }
 }
 ```
-4.เข้า Folder client
+# 1.) ส่วน Front-ent (client)
+1.4. เข้า Folder client
 ```bash
 cd CS360_Project/client
 ```
-5.แก้ไขไฟล์ package.json
+1.5. แก้ไขไฟล์ package.json
 ```bash
 nano package.json
 //เปลี่ยน test เป็น
 "test": "jest --coverage"
 ```
-6.สร้าง Folder tests
+1.6. สร้าง Folder tests
 ```bash
 mkdir CS360_Project/client/src/tests/
 cd CS360_Project/client/src/tests/
 ```
-7.สร้าง file Register.test.js และเพิ่มโค้ด Automade Test Case
+1.7. สร้าง file Register.test.js และเพิ่มโค้ด Automade Test Case
 ```bash
 touch Register.test.js
 
@@ -563,15 +564,19 @@ describe('Register Component - Integration Tests', () => {
     });
 });
 ```
+1.8. ออกจาก Folder client
+```bash
 cd ..
 
 cd ..
 
 cd ..
-
+```
+1.9. run automate test front-end
+```bash
 npm run test-fort
-
-**ส่วนของ backEnd
+```
+# 2.) ส่วนของ backEnd
 
 mkdir CS360_Project/backend/tests/
 
