@@ -367,7 +367,7 @@ nano package.json
   }
 }
 ```
-# 1.) ส่วน Front-ent (client)
+#1.) ส่วนของ Front-ent (client)
 1.4. เข้า Folder client
 ```bash
 cd CS360_Project/client
@@ -572,22 +572,22 @@ cd ..
 
 cd ..
 ```
-1.9. run automate test front-end
+1.9. run automated test front-end 
 ```bash
 npm run test-fort
 ```
 # 2.) ส่วนของ backEnd
-
-mkdir CS360_Project/backend/tests/
-
-cd CS360_Project/backend/tests/
-
-touch account.test.js
-
-nano account.test.js
+2.1 สร้าง Folder tests
 ```bash
-//เพิ่มโค้ด automade test
+mkdir CS360_Project/backend/tests/
+cd CS360_Project/backend/tests/
+```
+2.2 สร้าง File account.test.js
+```bash
+touch account.test.js
+nano account.test.js
 
+//เพิ่มโค้ด automade test
 const request = require('supertest');
 const app = require('../../backend/mockConfig/server'); // ปรับเส้นทางให้ตรงกับแอป Express ของคุณ
 const Account = require('../models/Account');
@@ -736,18 +736,25 @@ describe('Integration Tests for Account API', () => {
     });
 });
 ```
-cd ..
-
-nano package.json
-
-//แก้ไขโค้ดเพิ่มเติม
+2.3 ออกจาก Folder tests
 ```bash
+cd ..
+```
+2.4 เพิ่มโค้ด ใน File package.json
+```bash
+nano package.json
+//เพิ่มโค้ดเพิ่มเติม
  "backend": "file:",
  "react-scripts": "^5.0.1",
 ```
+2.5 ออกจาก Folder back-end
+```bash
 cd ..
-
+```
+2.6 run automated test back-end 
+```bash
 npm run test-back
+```
 
 ## Running Tests
 ...
