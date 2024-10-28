@@ -305,7 +305,8 @@ npm install --force
 npm rebuild sqlite3 --force
 
 nano package.json
-//เพิ่มโค้ด
+
+//แก้โค้ด
 {
   "devDependencies": {
     "@babel/preset-env": "^7.25.9",
@@ -366,13 +367,19 @@ nano package.json
 }
 
 cd CS360_Project/client
+
 nano package.json
+
 //เปลี่ยน test เป็น
+
 "test": "jest --coverage"
 
 mkdir CS360_Project/client/src/tests/
+
 cd CS360_Project/client/src/tests/
+
 touch Register.test.js
+
 nano Register.test.js
 
 //เพิ่ม Automade Test Case
