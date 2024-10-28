@@ -294,20 +294,21 @@ chmod +x namefile.sh
 ## Unit and Integration Testing Overview
 ...
 ## Setting Up Tests
-**คำสั่ง
-
+1.ติดตั้ง project ของ team
+```bash
 git clone -b develop https://github.com/techit6509650419/CS360_Project
-
+```
 cd CS360_Project
-
+2.ติดตั้ง npm และ node.js
+```bash
 npm install --force
 
 npm rebuild sqlite3 --force
-
+```
+3.แก้ไขโค้ดทั้งหมดใน package
+```bash
 nano package.json
 
-//แก้โค้ด
-```bash
 {
   "devDependencies": {
     "@babel/preset-env": "^7.25.9",
