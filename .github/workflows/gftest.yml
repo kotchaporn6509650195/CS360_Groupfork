@@ -39,5 +39,9 @@ jobs:
       run: npm install --force
 
     # Run test suite
-    - name: Run test suite
+    - name: Run test suite client
       run: npm run test-fort
+
+    - name: Run test suite backend
+      run: npm run test-back
+      
