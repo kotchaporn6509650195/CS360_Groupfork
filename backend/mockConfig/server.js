@@ -19,7 +19,7 @@ const accountRoutes = require('../routes/account.routes');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Register routes
+// Account routes
 app.use('/api', accountRoutes);
 
 // Error handling middleware
