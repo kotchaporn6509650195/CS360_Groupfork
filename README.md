@@ -294,7 +294,8 @@ chmod +x namefile.sh
 ## Unit and Integration Testing Overview
 ...
 ## Setting Up Tests
-คำสั่ง
+//คำสั่ง
+
 git clone -b develop https://github.com/techit6509650419/CS360_Project
 cd CS360_Project
 npm install --force
@@ -359,7 +360,6 @@ nano package.json
     "sqlite3": "^5.1.7"
   }
 }
-
 
 cd CS360_Project/client
 nano package.json
