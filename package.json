@@ -51,7 +51,7 @@
     "@strapi/plugin-users-permissions": "^4.15.0",
     "@strapi/strapi": "^4.15.0",
     "express": "^4.21.1",
-    "react-router-dom": "^5.3.4",
+    "react-router-dom": "^6.27.0",
     "sequelize": "^6.37.5",
     "sqlite3": "^5.1.7"
   }

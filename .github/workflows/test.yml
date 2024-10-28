@@ -1,4 +1,5 @@
-name: testing
+name: Test CS360 Project
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on:
   push:
     branches: 
@@ -30,7 +31,7 @@ jobs:
 
     # Install project dependencies
     - name: Install project dependencies
-      run: npm install
+      run: npm install --force
 
     # Rebuild sqlite3 (if necessary)
     - name: Rebuild sqlite3
