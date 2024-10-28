@@ -297,9 +297,13 @@ chmod +x namefile.sh
 //คำสั่ง
 
 git clone -b develop https://github.com/techit6509650419/CS360_Project
+
 cd CS360_Project
+
 npm install --force
+
 npm rebuild sqlite3 --force
+
 nano package.json
 //เพิ่มโค้ด
 {
