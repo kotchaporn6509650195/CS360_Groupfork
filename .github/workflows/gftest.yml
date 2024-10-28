@@ -13,30 +13,32 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
-
     - run: echo "This job is now running on a ${{ runner.os }}"
     - run: echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-    #Check out the latest code from repository
+    
+    # Check out the latest code from the repository
     - name: Check out the latest code from repository.
       uses: actions/checkout@v4
 
     - run: echo "The ${{ github.repository }} repository has been cloned to the runner."
+    
+    # List files in the repository
     - name: List files in the repository
       run: |
         ls ${{ github.workspace }}
 
-    #Setup Node.js environment
+    # Setup Node.js environment
     - name: Setup Node.js 16.x on Ubuntu
       uses: actions/setup-node@v4
       with:
         node-version: 16.x
         cache: 'npm'
 
-    #Install project dependencies
+    # Install project dependencies
     - name: Install project dependencies
       run: npm install --force
 
-    #Run test suite
+    # Run test suite
     - name: Run test suite
       run: npm test
     
