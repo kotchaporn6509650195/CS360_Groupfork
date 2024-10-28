@@ -22,6 +22,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm install
-    - run: npm run test-fort
-    - run: npm run test-back
+    - name: Install dependencies
+      run: npm install --legacy-peer-deps
+    - name: Run frontend tests
+      run: npm run test-fort
+    - name: Run backend tests
+      run: npm run test-back
