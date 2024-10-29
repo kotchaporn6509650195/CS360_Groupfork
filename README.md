@@ -834,4 +834,30 @@ The tests in this repository cover the following functionality:
 ## Viewing Test Results
 ...
 ## Adding New Tests
-...
+
+Add new test files in `client/src/tests/Register`
+
+1.Unit tests
+```bash
+describe('Register Component - Unit Tests', () => {
+    beforeEach(() => {
+        fetch.mockClear(); // Clear previous mock calls before each test
+    });
+
+test('New test name', async () => {
+        // Insert code for the new test here
+    });
+});
+```
+2.Integration tests
+```bash
+describe('Register Component - Integration Tests', () => {
+    beforeEach(() => {
+        jest.clearAllMocks(); // Clear previous mock calls and implementations before each test
+    });
+
+    test('New test name', async () => {
+        // Insert code for the new test
+    });
+});
+```
