@@ -4,6 +4,7 @@ import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import Register from '../components/Register/Register';
 import Login from '../components/Login/Login';
 import '@testing-library/jest-dom';
+import { AuthContext } from '../AuthContext';
 
 // Mock the global fetch function
 global.fetch = jest.fn();
@@ -154,19 +155,24 @@ describe('Register Component - Tests', () => {
         });
     });
 
-    test('successfully logs and navigates to login', async () => {
+     test('successfully logs and navigates to Home Page', async () => {
         mockFetchResponse({ success: true });
-
+        
+        // Mock the login function
+        const mockLogin = jest.fn();
+        
         render(
-            <MemoryRouter initialEntries={['/login']}>
-                <Routes>
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/" element={<div>Home Page</div>} />
-                </Routes>
-            </MemoryRouter>
+            <AuthContext.Provider value={{ login: mockLogin }}>
+                <MemoryRouter initialEntries={['/login']}>
+                    <Routes>
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/" element={<div>Home Page</div>} />
+                    </Routes>
+                </MemoryRouter>
+            </AuthContext.Provider>
         );
 
-        // Simulate user entering credentials
+        // Rest of the test remains the same
         fireEvent.change(screen.getByLabelText(/Username/i), { target: { value: 'user@example.com' } });
         fireEvent.change(screen.getByLabelText(/^Password$/i), { target: { value: 'Password1!' } });
 

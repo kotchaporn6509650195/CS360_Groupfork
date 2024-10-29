@@ -10,24 +10,27 @@ import ResetPassword from './components/Resetpassword/Resetpassword';
 import ForgotPassword from './components/Forgotpassword/Forgotpassword';
 import Newsletter from './components/Footer/Newsletter/Newsletter';
 import AppContext from './utils/context';
+import { AuthProvider } from './AuthContext';
 
 function App() {
     return (
         <BrowserRouter>
-            <AppContext>
-                <Header />
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/category/:id" element={<Category />} />
-                    <Route path="/product/:id" element={<SingleProduct />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} /> 
-                    <Route path="/newsletter" element={<Newsletter />} />
-                    <Route path="/forgot-password" element={<ForgotPassword />} />
-                    <Route path="/reset-password" element={<ResetPassword />} />
-                </Routes>
-                <Footer />
-            </AppContext>
+            <AuthProvider>
+                <AppContext>
+                    <Header />
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/category/:id" element={<Category />} />
+                        <Route path="/product/:id" element={<SingleProduct />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Register />} /> 
+                        <Route path="/newsletter" element={<Newsletter />} />
+                        <Route path="/forgot-password" element={<ForgotPassword />} />
+                        <Route path="/reset-password" element={<ResetPassword />} />
+                    </Routes>
+                    <Footer />
+                </AppContext>
+            </AuthProvider>
         </BrowserRouter>
     );
 }
