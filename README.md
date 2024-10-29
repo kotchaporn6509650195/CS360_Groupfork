@@ -781,14 +781,15 @@ npm run test-back
 ```
 
 ## Running Tests
-1.ผลลัพธ์จากการ run frontend
-
-![3](https://github.com/user-attachments/assets/79393c38-a797-48e5-a5e7-c88bf0936490)
-
-2.ผลลัพธ์จากการ run backend
-
-![4](https://github.com/user-attachments/assets/ef728227-7dca-4881-a299-ec34d9d0401a)
-
+cd CS360_Project
+1.Running Tests frontend
+```bash
+npm run test-front
+```
+2.Running Tests backend
+```bash
+npm run test-front
+```
 
 ## Test File Structure
 ...
