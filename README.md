@@ -293,23 +293,23 @@ chmod +x namefile.sh
 
 ## Unit and Integration Testing Overview
 ```bash
-1.สำหรับ Unit Testing
+1.For Unit Testing
 
-ทำการทดสอบด้วยระบบ Register มีทั้งหมด 7 test case
+Testing was done using the Register system. There were a total of 7 test cases.
 
-ซึ่งตรวจสอบว่าการสมัครสมาชิกนั้น ถูกต้องตามรูปแบบที่กำหนดไว้ หรือไม่
+which verifies that the membership application Is it correct according to the specified format?
 
-ถ้าเกิดใส่ข้อมูลไม่ถูกต้องตามรูปแบบที่กำหนดก็จะมีข้อความแจ้งเตือนว่าผิดรูปแบบอย่างไร
+If information is entered incorrectly according to the specified format, there will be a warning message indicating the format is incorrect.
 
-2.สำหรับ Integration Testing
+2.For Integration Testing
 
-ทำการทดสอบด้วยระบบ Register มีทั้งหมด 3 test case
+Testing was done using the Register system. There were a total of 3 test cases.
 
-ซึ่งตรวจสอบว่า Username ที่สมัครไปไม่ซ้ำกับในระบบ DataBase ของเว็บไซต์
+which verifies that the username applied is not the same as in the website's DataBase system.
 
-ถ้าเกิดว่า Username ที่จะสมัครเกิดซ้ำกับในระบบ DB จะมีข้อความแจ้งเตือนว่า Username นี้ถูกใช้ไปแล้ว
+If the Username you want to apply for is duplicated in the DB system, there will be a warning message saying that this Username has already been used.
 
-และเมื่อสมัครสมาชิกถูกต้องเรียบร้อยแล้ว จะต้องทำการ Login เข้าสู่ระบบได้
+And once you've signed up correctly, you'll need to log in to the system.
 ```
 
 ## Setting Up Tests
