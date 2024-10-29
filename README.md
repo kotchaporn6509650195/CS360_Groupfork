@@ -324,17 +324,17 @@ Able to pull all data in the database system and display it. and notify errors w
 
 ## Setting Up Tests
 set up environment:
-1.Install team project
+1. Install team project
 ```bash
 git clone -b develop https://github.com/techit6509650419/CS360_Project
 cd CS360_Project
 ```
-2.ติดตั้ง npm node.js และสร้าง sqlite ใหม่
+2. Install npm node.js and rebuild new sqlite.
 ```bash
 npm install --force
 npm rebuild sqlite3 --force
 ```
-3.แก้ไขโค้ดทั้งหมดใน package.json ใน Folder CS360_Project
+3. Edit All code in package.json in Folder CS360_Project.
 ```bash
 nano package.json
 
@@ -399,36 +399,37 @@ nano package.json
 
 ```
 
-- **ส่วนของ Front-end (client)
+- **Front-end (client) past
 
-1.4. เข้า Folder client
+4. Enter Folder client
 ```bash
 cd CS360_Project/client
 ```
-1.5. แก้ไขไฟล์ package.json ใน Folder client
+5. Edit package.json file in Folder client.
 ```bash
 nano package.json
 //เปลี่ยน test เป็น
 "test": "jest --coverage"
 ```
-1.6. สร้าง Folder tests
+6. Create Folder tests
 ```bash
 mkdir CS360_Project/client/src/tests/
 cd CS360_Project/client/src/tests/
 ```
-1.7. สร้าง file Register.test.js และเพิ่มโค้ด Automated Test Case
+7. Create the file Register.test.js and add the Automated Test Case code.
 ```bash
 touch Register.test.js
 
 nano Register.test.js
 
-//เพิ่ม Automade Test Case
-
+//เพิ่มโค้ด automade test
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import Register from '../components/Register/Register';
+import Login from '../components/Login/Login';
 import '@testing-library/jest-dom';
+import { AuthContext } from '../AuthContext';
 
 // Mock the global fetch function
 global.fetch = jest.fn();
@@ -441,6 +442,14 @@ const renderRegister = () => {
     );
 };
 
+const renderLogin = () => {
+    render(
+        <MemoryRouter>
+            <Login />
+        </MemoryRouter>
+    );
+};
+
 const mockFetchResponse = (response) => {
     fetch.mockResolvedValueOnce({
         ok: true,
@@ -448,7 +457,7 @@ const mockFetchResponse = (response) => {
     });
 };
 
-describe('Register Component - Unit Tests', () => {
+describe('Register Component - Tests', () => {
     beforeEach(() => {
         fetch.mockClear(); // Clear previous mock calls before each test
     });
@@ -462,6 +471,18 @@ describe('Register Component - Unit Tests', () => {
         expect(screen.getByLabelText('Password')).toBeInTheDocument();
         expect(screen.getByLabelText('Confirm Password')).toBeInTheDocument();
         expect(screen.getByRole('button', { name: /Register/i })).toBeInTheDocument();
+    });
+
+    test('shows error when username is shorter than 5 characters', async () => {
+        renderRegister();
+    
+        const usernameInput = screen.getByLabelText(/Username/i);
+        fireEvent.change(usernameInput, { target: { value: 'usr' } }); // Username less than 5 characters
+        fireEvent.blur(usernameInput);
+    
+        await waitFor(() => {
+            expect(screen.getByText(/Username must be at least 5 characters long/i)).toBeInTheDocument();
+        });
     });
 
     test('shows error message for invalid email format', async () => {
@@ -534,43 +555,6 @@ describe('Register Component - Unit Tests', () => {
             expect(screen.getByText(/Please fill in all required fields/i)).toBeInTheDocument();
         });
     });
-});
-
-describe('Register Component - Integration Tests', () => {
-    beforeEach(() => {
-        jest.clearAllMocks(); // Clear previous mock calls and implementations before each test
-    });
-
-    test('checks username availability', async () => {
-        renderRegister();
-
-        const usernameInput = screen.getByLabelText(/Username/i);
-        fireEvent.change(usernameInput, { target: { value: 'testuser' } });
-        fireEvent.blur(usernameInput);
-
-        await waitFor(() => {
-            const errorMessage = screen.queryByText(/Username is already taken/i);
-            if (errorMessage) {
-                expect(errorMessage).toBeInTheDocument(); // Username is taken
-            } else {
-                expect(errorMessage).not.toBeInTheDocument(); // Username is available
-            }
-        });
-    });
-
-    test('shows error when username is taken', async () => {
-        mockFetchResponse({ data: [{ id: 1, username: 'takenUsername' }] });
-
-        renderRegister();
-
-        const usernameInput = screen.getByLabelText(/Username/i);
-        fireEvent.change(usernameInput, { target: { value: 'takenUsername' } });
-        fireEvent.blur(usernameInput);
-
-        await waitFor(() => {
-            expect(screen.getByText(/Username is already taken/i)).toBeInTheDocument();
-        });
-    });
 
     test('successfully registers user and navigates to login', async () => {
         mockFetchResponse({ success: true });
@@ -595,9 +579,37 @@ describe('Register Component - Integration Tests', () => {
             expect(screen.getByText(/Login Page/i)).toBeInTheDocument();
         });
     });
+
+     test('successfully logs and navigates to Home Page', async () => {
+        mockFetchResponse({ success: true });
+        
+        // Mock the login function
+        const mockLogin = jest.fn();
+        
+        render(
+            <AuthContext.Provider value={{ login: mockLogin }}>
+                <MemoryRouter initialEntries={['/login']}>
+                    <Routes>
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/" element={<div>Home Page</div>} />
+                    </Routes>
+                </MemoryRouter>
+            </AuthContext.Provider>
+        );
+
+        // Rest of the test remains the same
+        fireEvent.change(screen.getByLabelText(/Username/i), { target: { value: 'user@example.com' } });
+        fireEvent.change(screen.getByLabelText(/^Password$/i), { target: { value: 'Password1!' } });
+
+        fireEvent.click(screen.getByRole('button', { name: /Login/i }));
+
+        await waitFor(() => {
+            expect(screen.getByText(/Home Page/i)).toBeInTheDocument();
+        });
+    });
 });
 ```
-1.8. ออกจาก Folder client
+8. Exit Folder client
 ```bash
 cd ..
 
@@ -605,18 +617,14 @@ cd ..
 
 cd ..
 ```
-1.9. run Automated test front-end 
-```bash
-npm run test-fort
-```
-#2.) ส่วนของ backEnd
+- **backend part
 
-2.1 สร้าง Folder tests ใน Folder backEnd
+1. Create Folder tests in Folder backEnd
 ```bash
 mkdir CS360_Project/backend/tests/
 cd CS360_Project/backend/tests/
 ```
-2.2 สร้าง File account.test.js
+2. Create File account.test.js and add the Automated Test Case code.
 ```bash
 touch account.test.js
 nano account.test.js
@@ -769,25 +777,6 @@ describe('Integration Tests for Account API', () => {
         await sequelize.close(); // ปิดการเชื่อมต่อฐานข้อมูล
     });
 });
-```
-2.3 ออกจาก Folder tests
-```bash
-cd ..
-```
-2.4 เพิ่มโค้ด ใน File package.json ใน Folder backend
-```bash
-nano package.json
-//เพิ่มโค้ดเพิ่มเติม
- "backend": "file:",
- "react-scripts": "^5.0.1",
-```
-2.5 ออกจาก Folder backend
-```bash
-cd ..
-```
-2.6 run automated test backend 
-```bash
-npm run test-back
 ```
 
 ## Running Tests
