@@ -292,7 +292,7 @@ chmod +x namefile.sh
 ![image](https://github.com/user-attachments/assets/9ecca414-cedc-40fc-b622-29b7ff8e3ba7)
 
 ## Unit and Integration Testing Overview
-```bash
+
 1.For Unit Testing
 
 Testing was done using the Register system. There were a total of 7 test cases.
@@ -312,12 +312,12 @@ If the Username you want to apply for is duplicated in the DB system,
 there will be a warning message saying that this Username has already been used.
 
 And once you've signed up correctly, you'll need to log in to the system.
-```
+
 
 ## Setting Up Tests
 1.ติดตั้ง project ของ team
 ```bash
-git clone -b develop https://github.com/techit6509650419/CS360_Project
+git clone -b sprint2-test https://github.com/techit6509650419/CS360_Project
 cd CS360_Project
 ```
 2.ติดตั้ง npm node.js และสร้าง sqlite ใหม่
@@ -387,6 +387,7 @@ nano package.json
     "sqlite3": "^5.1.7"
   }
 }
+
 ```
 #1.) ส่วนของ Front-end (client)
 
