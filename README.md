@@ -833,10 +833,37 @@ npm run test-back
 √ Returns a 404 error for a non-existing account
 ```
 - **CI Configuration**
+
 The `test.yml` file utilized for Continuous Integration (CI) in GitHub Actions is located in the `.github/workflows` directory. This file is set up to manage the CI process for our testing pipeline.
 
 ## Test Coverage
-+++
+
+This project uses Jest for code coverage testing
+
+1. **Change Directory into Project**
+
+```bash
+cd CS360_Project
+```
+
+2. **Install Jest**
+
+```bash
+npm install jest -g
+```
+
+3. Run Tests with Coverage Checking
+
+```bash
+jest --coverage
+```
+
+4. Check Results
+
+- Statement Coverage: Percentage of statements that have been tested
+- Branch Coverage: Percentage of conditions that have been tested
+- Function Coverage: Percentage of functions that have been called during testing
+- Line Coverage: Percentage of lines in the code that have been tested
 
 ## Viewing Test Results
 
