@@ -306,7 +306,7 @@ For the tools that our group uses for testing
 
   1. For Unit Testing
 
-Testing was done using the Register system. There were a total of 7 test cases.
+Testing was done using the Register system. There were a total of 10 test cases.
 
 which verifies that the membership application Is it correct according to the specified format?
 
@@ -323,9 +323,10 @@ Able to pull all data in the database system and display it. and notify errors w
 
 
 ## Setting Up Tests
-1.ติดตั้ง project ของ team
+set up environment:
+1.Install team project
 ```bash
-git clone -b sprint2-test https://github.com/techit6509650419/CS360_Project
+git clone -b develop https://github.com/techit6509650419/CS360_Project
 cd CS360_Project
 ```
 2.ติดตั้ง npm node.js และสร้าง sqlite ใหม่
@@ -397,7 +398,8 @@ nano package.json
 }
 
 ```
-#1.) ส่วนของ Front-end (client)
+
+- **ส่วนของ Front-end (client)
 
 1.4. เข้า Folder client
 ```bash
