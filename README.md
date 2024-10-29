@@ -847,7 +847,7 @@ npm install --save-dev jest --force
   -  Run test suite frontend coverage
 
 ```bash
-npm run test-back -- --coverage
+npm run test-front -- --coverage
 ```
 
   -  Run test suite backend coverage
