@@ -780,6 +780,84 @@ describe('Integration Tests for Account API', () => {
 });
 ```
 
+- **github action flie .yml part
+  
+  1. create folder .github\workflows and create a test.yml file.
+  
+  ```bash
+    mkdir .github\workflows
+    touch test.yml
+    nano test.yml
+  ```
+  
+  2. Add code to test.yml file.
+  
+  ```bash
+    name: Test CS360 Project
+    run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+    on:
+      push:
+        branches: 
+          - '*'
+      pull_request:
+        branches:
+          - '*'
+
+    jobs:
+      Run-npm:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-24.04, windows-latest, macos-latest]  # Add other OS as needed
+        node-version: [18, 20]  # Updated to the latest Node.js versions
+
+    steps:
+    # Check out the latest code from the repository
+    - name: Check Repository
+      uses: actions/checkout@v4
+
+
+    # Setup Node.js environment
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    # Install project dependencies
+    - name: Install project dependencies
+      run: npm install --force
+
+    # Rebuild sqlite3 (if necessary)
+    - name: Rebuild sqlite3
+      run: npm rebuild sqlite3 --force
+
+    # Run test suite client
+    - name: Run test suite client
+      run: npm run test-front
+
+    # Run test suite client coverage
+    - name: Run test suite client coverage
+      run: npm run test-front -- --coverage
+
+    # Run test suite backend
+    - name: Run test suite backend
+      run: npm run test-back
+
+    # Run test suite backend coverage
+    - name: Run test suite backend coverage
+      run: npm run test-back -- --coverage  
+    ```
+  
+  3. Then you can push the code up to github.
+  
+  ```bash
+    git checkout nameBranch
+    git add .
+    git commit -m "message"
+    git push origin nameBranch
+  ```
+  
 ## Running Tests
 ```bash
 cd CS360_Project
