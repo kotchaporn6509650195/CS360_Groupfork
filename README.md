@@ -641,7 +641,7 @@ describe('Integration Tests for Account API', () => {
         
         await Account.sync({ force: true }); #ตั้งค่าฐานข้อมูลใหม่ก่อนการทดสอบ
 
-        // สร้างบัญชีสำหรับการทดสอบ
+        # สร้างบัญชีสำหรับการทดสอบ
         await Account.create({
             username: 'testuser1',
             password: 'password123',
@@ -690,7 +690,7 @@ describe('Integration Tests for Account API', () => {
         };
 
         const response = await request(app)
-            .put(`/api/accounts/${createdAccount.id}`) // อัปเดตบัญชี
+            .put(`/api/accounts/${createdAccount.id}`) # อัปเดตบัญชี
             .send(updatedAccount)
             .expect(200);
 
@@ -728,7 +728,7 @@ describe('Integration Tests for Account API', () => {
         };
 
         const response = await request(app)
-            .put('/api/accounts/9999') // ใช้ ID ที่ไม่มีอยู่
+            .put('/api/accounts/9999') # ใช้ ID ที่ไม่มีอยู่
             .send(updatedAccount)
             .expect(404);
 
@@ -787,7 +787,7 @@ cd CS360_Project
 
 1.Running Tests frontend
 ```bash
-npm run test-fort
+npm run test-front
 ```
 
 2.Running Tests backend
