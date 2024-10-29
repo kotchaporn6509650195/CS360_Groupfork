@@ -14,56 +14,27 @@ const Register = () => {
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
     const navigate = useNavigate();
 
-    // Password validation function
+    // Validation functions
+    const validateUsername = (username) => {
+        return username.length < 5 ? 'Username must be at least 5 characters long' : '';
+    };
+
     const validatePassword = (password) => {
-        if (password.length < 8) {
-            return 'Password must be at least 8 characters long';
-        }
-        const uppercaseRegex = /[A-Z]/;
-        if (!uppercaseRegex.test(password)) {
-            return 'Password must contain at least one uppercase letter';
-        }
-        const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
-        if (!specialCharRegex.test(password)) {
-            return 'Password must contain at least one special character';
-        }
-        const numberRegex = /\d/; // Check for at least one numeric character
-        if (!numberRegex.test(password)) {
-            return 'Password must contain at least one number';
-        }
+        if (password.length < 8) return 'Password must be at least 8 characters long';
+        if (!/[A-Z]/.test(password)) return 'Password must contain at least one uppercase letter';
+        if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) return 'Password must contain at least one special character';
+        if (!/\d/.test(password)) return 'Password must contain at least one number';
         return '';
     };
 
-    // Email validation function
-    const validateEmail = (email) => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            return 'Invalid email format';
-        }
-        return '';
+    const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? '' : 'Invalid email format';
+
+    // Handle username input change
+    const handleUsernameChange = (e) => {
+        const value = e.target.value;
+        setUsername(value);
+        setUsernameError(validateUsername(value)); // Validate on change
     };
-
-    // Check username availability
-    const checkUsername = async () => {
-        if (!username) return; // Skip check if username is empty
-        try {
-            const response = await fetch(process.env.REACT_APP_DEV_URL + `/api/accounts?filters[username][$eq]=${username}`);
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(data.message || 'Failed to check username');
-            }
-
-            if (data.data && data.data.length > 0) {
-                setUsernameError('Username is already taken');
-            } else {
-                setUsernameError(''); // Clear error if the username is available
-            }
-        } catch (err) {
-            setUsernameError(err.message);
-        }
-    };
-
 
     // Handle form submission
     const handleSubmit = async (e) => {
@@ -76,27 +47,15 @@ const Register = () => {
         setPasswordError('');
         setConfirmPasswordError('');
 
-        // Check for empty fields
-        if (!username) {
-            setUsernameError('Username is required');
-        }
-        if (!email) {
-            setEmailError('Email is required');
-        }
-        if (!password) {
-            setPasswordError('Password is required');
-        }
-        if (!confirmPassword) {
-            setConfirmPasswordError('Confirm password is required');
-        }
-
-        // Return early if there are validation errors
         if (!username || !email || !password || !confirmPassword) {
             setError('Please fill in all required fields.');
+            if (!username) setUsernameError('Username is required');
+            if (!email) setEmailError('Email is required');
+            if (!password) setPasswordError('Password is required');
+            if (!confirmPassword) setConfirmPasswordError('Confirm password is required');
             return;
         }
 
-        // Check for validation errors
         const emailValidationError = validateEmail(email);
         if (emailValidationError) {
             setEmailError(emailValidationError);
@@ -115,38 +74,24 @@ const Register = () => {
             return;
         }
 
-        // Register the user
         try {
-            const response = await fetch(`${process.env.REACT_APP_DEV_URL}/api/accounts`, {
+            const response = await fetch(`${process.env.REACT_APP_DEV_URL}/api/auth/local/register`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    data: {
-                        username,
-                        email,
-                        password,
-                    },
-                }),
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, email, password }),
             });
 
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.message || 'Failed to register');
+                const errorMsg = data.error?.message || 'Failed to register';
+                throw new Error(errorMsg);
             }
 
-            // Redirect to login page or another page
             navigate('/login');
         } catch (err) {
             setError(err.message);
         }
-    };
-
-    // Handle onBlur for username check
-    const handleUsernameBlur = () => {
-        checkUsername();
     };
 
     return (
@@ -159,8 +104,8 @@ const Register = () => {
                         type="text"
                         id="username"
                         value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        onBlur={handleUsernameBlur}
+                        onChange={handleUsernameChange}
+                        onBlur={() => setUsernameError(validateUsername(username))} // Validate on blur
                         required
                     />
                     {usernameError && <p className="error">{usernameError}</p>}
@@ -174,6 +119,7 @@ const Register = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         onBlur={() => setEmailError(validateEmail(email))}
+                        required
                     />
                     {emailError && <p className="error">{emailError}</p>}
                 </div>
@@ -186,6 +132,7 @@ const Register = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         onBlur={() => setPasswordError(validatePassword(password))}
+                        required
                     />
                     {passwordError && <p className="error">{passwordError}</p>}
                 </div>
@@ -203,7 +150,8 @@ const Register = () => {
                             } else {
                                 setConfirmPasswordError('');
                             }
-                        }} 
+                        }}
+                        required
                     />
                     {confirmPasswordError && <p className="error">{confirmPasswordError}</p>}
                 </div>
