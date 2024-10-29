@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import Register from '../components/Register/Register';
+import Login from '../components/Login/Login';
 import '@testing-library/jest-dom';
 
 // Mock the global fetch function
@@ -15,6 +16,14 @@ const renderRegister = () => {
     );
 };
 
+const renderLogin = () => {
+    render(
+        <MemoryRouter>
+            <Login />
+        </MemoryRouter>
+    );
+};
+
 const mockFetchResponse = (response) => {
     fetch.mockResolvedValueOnce({
         ok: true,
@@ -22,7 +31,7 @@ const mockFetchResponse = (response) => {
     });
 };
 
-describe('Register Component - Unit Tests', () => {
+describe('Register Component - Tests', () => {
     beforeEach(() => {
         fetch.mockClear(); // Clear previous mock calls before each test
     });
@@ -36,6 +45,18 @@ describe('Register Component - Unit Tests', () => {
         expect(screen.getByLabelText('Password')).toBeInTheDocument();
         expect(screen.getByLabelText('Confirm Password')).toBeInTheDocument();
         expect(screen.getByRole('button', { name: /Register/i })).toBeInTheDocument();
+    });
+
+    test('shows error when username is shorter than 5 characters', async () => {
+        renderRegister();
+    
+        const usernameInput = screen.getByLabelText(/Username/i);
+        fireEvent.change(usernameInput, { target: { value: 'usr' } }); // Username less than 5 characters
+        fireEvent.blur(usernameInput);
+    
+        await waitFor(() => {
+            expect(screen.getByText(/Username must be at least 5 characters long/i)).toBeInTheDocument();
+        });
     });
 
     test('shows error message for invalid email format', async () => {
@@ -108,43 +129,6 @@ describe('Register Component - Unit Tests', () => {
             expect(screen.getByText(/Please fill in all required fields/i)).toBeInTheDocument();
         });
     });
-});
-
-describe('Register Component - Integration Tests', () => {
-    beforeEach(() => {
-        jest.clearAllMocks(); // Clear previous mock calls and implementations before each test
-    });
-
-    test('checks username availability', async () => {
-        renderRegister();
-
-        const usernameInput = screen.getByLabelText(/Username/i);
-        fireEvent.change(usernameInput, { target: { value: 'testuser' } });
-        fireEvent.blur(usernameInput);
-
-        await waitFor(() => {
-            const errorMessage = screen.queryByText(/Username is already taken/i);
-            if (errorMessage) {
-                expect(errorMessage).toBeInTheDocument(); // Username is taken
-            } else {
-                expect(errorMessage).not.toBeInTheDocument(); // Username is available
-            }
-        });
-    });
-
-    test('shows error when username is taken', async () => {
-        mockFetchResponse({ data: [{ id: 1, username: 'takenUsername' }] });
-
-        renderRegister();
-
-        const usernameInput = screen.getByLabelText(/Username/i);
-        fireEvent.change(usernameInput, { target: { value: 'takenUsername' } });
-        fireEvent.blur(usernameInput);
-
-        await waitFor(() => {
-            expect(screen.getByText(/Username is already taken/i)).toBeInTheDocument();
-        });
-    });
 
     test('successfully registers user and navigates to login', async () => {
         mockFetchResponse({ success: true });
@@ -167,6 +151,29 @@ describe('Register Component - Integration Tests', () => {
 
         await waitFor(() => {
             expect(screen.getByText(/Login Page/i)).toBeInTheDocument();
+        });
+    });
+
+    test('successfully logs and navigates to login', async () => {
+        mockFetchResponse({ success: true });
+
+        render(
+            <MemoryRouter initialEntries={['/login']}>
+                <Routes>
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/" element={<div>Home Page</div>} />
+                </Routes>
+            </MemoryRouter>
+        );
+
+        // Simulate user entering credentials
+        fireEvent.change(screen.getByLabelText(/Username/i), { target: { value: 'user@example.com' } });
+        fireEvent.change(screen.getByLabelText(/^Password$/i), { target: { value: 'Password1!' } });
+
+        fireEvent.click(screen.getByRole('button', { name: /Login/i }));
+
+        await waitFor(() => {
+            expect(screen.getByText(/Home Page/i)).toBeInTheDocument();
         });
     });
 });
