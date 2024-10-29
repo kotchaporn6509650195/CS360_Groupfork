@@ -844,13 +844,13 @@ npm install --save-dev jest --force
 
 3. Run Tests with Coverage Checking
    
-Run test suite frontend coverage
+  -  Run test suite frontend coverage
 
 ```bash
 npm run test-back -- --coverage
 ```
 
-Run test suite backend coverage
+  -  Run test suite backend coverage
 
 ```bash
 npm run test-back -- --coverage
