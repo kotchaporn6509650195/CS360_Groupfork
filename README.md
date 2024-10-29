@@ -791,17 +791,17 @@ npm run test-front
 ```
 2.Running Tests backend
 ```bash
-npm run test-front
+npm run test-back
 ```
 
 ## Test File Structure
 ...
 ## Test Coverage
-ผลลัพธ์จากการ run frontend coverage
+Test Coverage frontend
 
 ![1](https://github.com/user-attachments/assets/096f442b-e521-47fd-96fa-d6ed02da4786)
 
-ผลลัพธ์จากการ run backend coverage
+Test Coverage backend
 
 ![2](https://github.com/user-attachments/assets/0fcbdf62-e1b0-4789-a784-1ff4f92f4a20)
 
