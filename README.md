@@ -779,7 +779,12 @@ describe('Integration Tests for Account API', () => {
     });
 });
 ```
+3. Exit Folder backend
+```bash
+cd ..
 
+cd ..
+```
 - **github action flie .yml part
   
   1. create folder .github\workflows and create a test.yml file.
