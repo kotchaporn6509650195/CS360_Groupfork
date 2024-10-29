@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.scss';
+import { AuthContext } from '../../AuthContext';
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const { login } = useContext(AuthContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+    
 
         try {
             const response = await fetch(`${process.env.REACT_APP_DEV_URL}/api/auth/local`, { // Adjust the URL if needed
@@ -32,6 +35,7 @@ const Login = () => {
             // Handle successful login
             console.log('Login successful:', data); // Log user data if needed
             navigate('/'); // Redirect to the home page or dashboard
+            login({ username: data.user.username }); // Adjust according to your API response
         } catch (err) {
             setError(err.message);
         }
@@ -48,6 +52,7 @@ const Login = () => {
                         id="username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
+                        placeholder="Enter Username"
                         required
                     />
                 </div>
@@ -58,6 +63,7 @@ const Login = () => {
                         id="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Enter Password"
                         required
                     />
                 </div>

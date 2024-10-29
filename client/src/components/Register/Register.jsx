@@ -106,6 +106,7 @@ const Register = () => {
                         value={username}
                         onChange={handleUsernameChange}
                         onBlur={() => setUsernameError(validateUsername(username))} // Validate on blur
+                        placeholder="Enter Username"
                         required
                     />
                     {usernameError && <p className="error">{usernameError}</p>}
@@ -119,6 +120,7 @@ const Register = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         onBlur={() => setEmailError(validateEmail(email))}
+                        placeholder="Enter Gmail (Ex.xxx@gmail.com)"
                         required
                     />
                     {emailError && <p className="error">{emailError}</p>}
@@ -132,6 +134,7 @@ const Register = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         onBlur={() => setPasswordError(validatePassword(password))}
+                        placeholder="Enter Psassword"
                         required
                     />
                     {passwordError && <p className="error">{passwordError}</p>}
@@ -151,6 +154,7 @@ const Register = () => {
                                 setConfirmPasswordError('');
                             }
                         }}
+                        placeholder="Confirm Password"
                         required
                     />
                     {confirmPasswordError && <p className="error">{confirmPasswordError}</p>}
@@ -158,6 +162,10 @@ const Register = () => {
 
                 {error && <p className="error">{error}</p>}
                 <button type="submit">Register</button>
+                
+                <div className="links">
+                    <a href="/login">Back to Login</a>
+                </div>
             </form>
         </div>
     );
