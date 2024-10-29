@@ -876,10 +876,10 @@ You can view test results on both GitHub and in your terminal.
 
 2.view test results on terminal
 
-- Run `npm run test-fort -- --coverage` to view feature Register test result output:
+- Run `npm run test-front -- --coverage` to view feature Register test result output:
 
 ```bash
-> test-fort
+> test-front
 > jest client/src/tests/Register --coverage
 
   console.log
@@ -960,11 +960,11 @@ Add new test files about feature Register in `client/src/tests/Register` and fea
 ```bash
 describe('Register Component - Unit Tests', () => {
     beforeEach(() => {
-        fetch.mockClear(); // Clear previous mock calls before each test
+        fetch.mockClear(); # Clear previous mock calls before each test
     });
 
 test('New test name', async () => {
-        // Insert code for the new test here
+        # Insert code for the new test here
     });
 });
 ```
@@ -972,11 +972,11 @@ test('New test name', async () => {
 ```bash
 describe('Register Component - Integration Tests', () => {
     beforeEach(() => {
-        jest.clearAllMocks(); // Clear previous mock calls and implementations before each test
+        jest.clearAllMocks(); # Clear previous mock calls and implementations before each test
     });
 
     test('New test name', async () => {
-        // Insert code for the new test
+        # Insert code for the new test
     });
 });
 ```
