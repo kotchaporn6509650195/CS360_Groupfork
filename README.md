@@ -299,7 +299,8 @@ Testing was done using the Register system. There were a total of 7 test cases.
 
 which verifies that the membership application Is it correct according to the specified format?
 
-If information is entered incorrectly according to the specified format, there will be a warning message indicating the format is incorrect.
+If information is entered incorrectly according to the specified format,
+there will be a warning message indicating the format is incorrect.
 
 2.For Integration Testing
 
@@ -307,7 +308,8 @@ Testing was done using the Register system. There were a total of 3 test cases.
 
 which verifies that the username applied is not the same as in the website's DataBase system.
 
-If the Username you want to apply for is duplicated in the DB system, there will be a warning message saying that this Username has already been used.
+If the Username you want to apply for is duplicated in the DB system,
+there will be a warning message saying that this Username has already been used.
 
 And once you've signed up correctly, you'll need to log in to the system.
 ```
