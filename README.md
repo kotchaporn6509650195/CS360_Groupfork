@@ -292,7 +292,7 @@ chmod +x namefile.sh
 ![image](https://github.com/user-attachments/assets/9ecca414-cedc-40fc-b622-29b7ff8e3ba7)
 
 ## Unit and Integration Testing Overview
-
+```bash
 1.สำหรับ Unit Testing
 
 ทำการทดสอบด้วยระบบ Register มีทั้งหมด 7 test case
@@ -310,6 +310,7 @@ chmod +x namefile.sh
 ถ้าเกิดว่า Username ที่จะสมัครเกิดซ้ำกับในระบบ DB จะมีข้อความแจ้งเตือนว่า Username นี้ถูกใช้ไปแล้ว
 
 และเมื่อสมัครสมาชิกถูกต้องเรียบร้อยแล้ว จะต้องทำการ Login เข้าสู่ระบบได้
+```
 
 ## Setting Up Tests
 1.ติดตั้ง project ของ team
