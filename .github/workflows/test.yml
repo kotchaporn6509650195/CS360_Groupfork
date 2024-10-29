@@ -39,8 +39,16 @@ jobs:
 
     # Run test suite client
     - name: Run test suite client
-      run: npm run test-fort
+      run: npm run test-front
+
+    # Run test suite client coverage
+    - name: Run test suite client coverage
+      run: npm run test-front -- --coverage
 
     # Run test suite backend
     - name: Run test suite backend
       run: npm run test-back
+
+    # Run test suite backend coverage
+    - name: Run test suite backend coverage
+      run: npm run test-back -- --coverage
