@@ -786,11 +786,11 @@ cd CS360_Project
 
 1.Running Tests frontend
 ```bash
-npm run test-front
+npm run test-front -- --coverage
 ```
 2.Running Tests backend
 ```bash
-npm run test-back
+npm run test-back -- --coverage
 ```
 
 ## Test File Structure
