@@ -802,10 +802,97 @@ The tests in this repository cover the following functionality:
 -
 -
 ## Viewing Test Results
-...
+
+You can view test results on both GitHub and in your terminal.
+
+1.view test results on GitHub
+
+- **Go to the Repository Page**: Open the repository page and go to branch sprint2-test
+- **Navigate to the Actions Tab**: At the top of the repository page, click on "Actions"
+- **Select the Desired Workflow**: You’ll see a list of workflows that have run. Select the workflow you want to review
+- **View Test Results**: After choosing a workflow, click on specific jobs to open their logs. The logs will display detailed test results
+
+2.view test results on terminal
+
+- Run `npm run test-fort -- --coverage` to view feature Register test result output:
+
+```bash
+> test-fort
+> jest client/src/tests/Register --coverage
+
+  console.log
+    Login successful: { success: true }
+
+      at log (client/src/components/Login/Login.jsx:36:21)
+
+ PASS  client/src/tests/Register.test.js
+  Register Component - Tests
+    √ renders the register form (75 ms)                                                                                                                                                                           
+    √ shows error when username is shorter than 5 characters (17 ms)                                                                                                                                              
+    √ shows error message for invalid email format (14 ms)                                                                                                                                                        
+    √ shows error for password less than 8 characters (17 ms)                                                                                                                                                     
+    √ shows error for password without uppercase letter (9 ms)                                                                                                                                                    
+    √ shows error for password without a number (22 ms)                                                                                                                                                           
+    √ shows error when passwords do not match (15 ms)                                                                                                                                                             
+    √ shows error when required fields are missing (16 ms)                                                                                                                                                        
+    √ successfully registers user and navigates to login (47 ms)                                                                                                                                                  
+    √ successfully logs and navigates to Home Page (48 ms)                                                                                                                                                        
+                                                                                                                                                                                                                  
+-------------------------|---------|----------|---------|---------|--------------------------------                                                                                                               
+File                     | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                                                                                                                             
+-------------------------|---------|----------|---------|---------|--------------------------------
+All files                |    81.9 |    70.37 |      85 |   81.25 | 
+ src                     |      25 |      100 |       0 |      25 | 
+  AuthContext.js         |      25 |      100 |       0 |      25 | 7-17
+ src/components/Login    |      95 |    33.33 |     100 |      95 | 
+  Login.jsx              |      95 |    33.33 |     100 |      95 | 32
+ src/components/Register |   84.41 |       75 |     100 |   83.82 | 
+  Register.jsx           |   84.41 |       75 |     100 |   83.82 | 61-62,67-68,72-74,87-88,93,154
+-------------------------|---------|----------|---------|---------|--------------------------------
+Test Suites: 1 passed, 1 total
+Tests:       10 passed, 10 total
+Snapshots:   0 total
+Time:        1.999 s, estimated 3 s
+Ran all test suites matching /client\\src\\tests\\Register/i.
+```
+- Run `npm run test-back -- --coverage` to view feature Account test result output:
+
+```bash
+> test-back
+> jest backend/tests/account.test.js --coverage
+
+ PASS  backend/tests/account.test.js
+  Integration Tests for Account API
+    √ should create a new account (44 ms)
+    √ should update an existing account (23 ms)
+    √ should retrieve all accounts (5 ms)
+    √ should return 400 for missing required fields (7 ms)
+    √ should return 404 for updating a non-existing account (6 ms)
+    √ should retrieve an account by ID (13 ms)
+    √ should delete an existing account (21 ms)
+    √ should return 404 for a non-existing account (6 ms)
+
+--------------------|---------|----------|---------|---------|-------------------
+File                | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+--------------------|---------|----------|---------|---------|-------------------
+All files           |   75.36 |     37.5 |   45.45 |   76.47 |                   
+ mockConfig         |   57.14 |       10 |       0 |   59.25 |                   
+  database.js       |    62.5 |        0 |       0 |    62.5 | 4-85              
+  server.js         |      55 |       25 |       0 |   57.89 | 27-28,33-42       
+ models             |     100 |      100 |     100 |     100 |                   
+  Account.js        |     100 |      100 |     100 |     100 |                   
+ routes             |   86.48 |    83.33 |     100 |   86.48 |                   
+  account.routes.js |   86.48 |    83.33 |     100 |   86.48 | 21,34,48,57,62    
+--------------------|---------|----------|---------|---------|-------------------
+Test Suites: 1 passed, 1 total
+Tests:       8 passed, 8 total
+Snapshots:   0 total
+Time:        2.881 s
+Ran all test suites matching /backend\\tests\\account.test.js/i.
+```
 ## Adding New Tests
 
-Add new test files in `client/src/tests/Register`
+Add new test files about feature Register in `client/src/tests/Register` and feature account in `backend/src/tests/account`
 
 1.Unit tests
 ```bash
