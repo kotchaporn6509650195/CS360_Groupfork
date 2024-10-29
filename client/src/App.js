@@ -6,6 +6,8 @@ import Category from './components/Category/Category';
 import SingleProduct from './components/SingleProduct/SingleProduct';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
+import ResetPassword from './components/Resetpassword/Resetpassword';
+import ForgotPassword from './components/Forgotpassword/Forgotpassword';
 import Newsletter from './components/Footer/Newsletter/Newsletter';
 import AppContext from './utils/context';
 
@@ -21,6 +23,8 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} /> 
                     <Route path="/newsletter" element={<Newsletter />} />
+                    <Route path="/forgot-password" element={<ForgotPassword />} />
+                    <Route path="/reset-password" element={<ResetPassword />} />
                 </Routes>
                 <Footer />
             </AppContext>
