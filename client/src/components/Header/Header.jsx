@@ -1,9 +1,9 @@
-import { useEffect, useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-
-import {TbSearch} from "react-icons/tb";
-import {CgShoppingCart} from "react-icons/cg";
-import {AiOutlineHeart} from "react-icons/ai";
+import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { TbSearch } from "react-icons/tb";
+import { CgShoppingCart } from "react-icons/cg";
+import { AiOutlineHeart } from "react-icons/ai";
+import { AuthContext } from '../../AuthContext';
 
 import Search from "./Search/Search";
 import Cart from "../Cart/Cart";
@@ -17,6 +17,7 @@ const Header = () => {
     const [showCart, setShowCart] = useState(false);
     const [showSearch, setShowSearch] = useState(false);
     const { cartCount } = useContext(Context);
+    const { user, logout } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const handleScroll = () => {
@@ -28,8 +29,9 @@ const Header = () => {
         }
     };
 
-    const handleLogin = () => {
-        navigate("/login"); // ส่งไปยังหน้า login เมื่อคลิกที่ปุ่ม Login
+    const handleLogout = () => {
+        logout();
+        navigate('/');
     };
 
     useEffect(() => {
@@ -53,10 +55,18 @@ const Header = () => {
                         <CgShoppingCart />
                         {!!cartCount && <span>{cartCount}</span>}
                     </span>
-                    {/* ปุ่ม Login */}
-                    <button className="login-btn" onClick={handleLogin}>
-                        Login
-                    </button>
+                    {user ? (
+                        <div className="user-menu">
+                            <span className="username">{user.username}</span>
+                            <button className="logout-btn" onClick={handleLogout}>
+                                Logout
+                            </button>
+                        </div>
+                    ) : (
+                        <button className="login-btn" onClick={() => navigate("/login")}>
+                            Login
+                        </button>
+                    )}
                 </div>
             </div>
         </header>
