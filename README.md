@@ -795,20 +795,39 @@ npm run test-back
 ```
 
 ## Test File Structure
-...
+
+- **Unit Tests** (Register.test.js) `client/src/tests/Register.test.js` Register Component tests
+
+```bash
+√ Renders the registration form
+√ Shows error when the username is shorter than 5 characters
+√ Shows error message for invalid email format
+√ Shows error for password less than 8 characters
+√ Shows error for password without uppercase letters
+√ Shows error for password without numbers
+√ Shows error when passwords do not match
+√ Shows error when required fields are missing
+√ Successfully registers user and navigates to the login page
+√ Successfully registers and navigates to the home page
+```
+- **Integration Tests** (account.test.js) `backend/tests/account.test.js` Tests for Account API
+
+```bash
+√ Creates a new account
+√ Updates an existing account
+√ Retrieves all accounts
+√ Returns a 400 error for missing required fields
+√ Returns a 404 error for updating a non-existing account
+√ Retrieves an account by ID
+√ Deletes an existing account
+√ Returns a 404 error for a non-existing account
+```
+- **CI Configuration**
+The `test.yml` file utilized for Continuous Integration (CI) in GitHub Actions is located in the `.github/workflows` directory. This file is set up to manage the CI process for our testing pipeline.
+
 ## Test Coverage
-Test Coverage frontend
++++
 
-![1](https://github.com/user-attachments/assets/096f442b-e521-47fd-96fa-d6ed02da4786)
-
-Test Coverage backend
-
-![2](https://github.com/user-attachments/assets/0fcbdf62-e1b0-4789-a784-1ff4f92f4a20)
-
-The tests in this repository cover the following functionality:
--
--
--
 ## Viewing Test Results
 
 You can view test results on both GitHub and in your terminal.
