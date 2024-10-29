@@ -786,11 +786,12 @@ cd CS360_Project
 
 1.Running Tests frontend
 ```bash
-npm run test-front -- --coverage
+npm run test-front
 ```
+
 2.Running Tests backend
 ```bash
-npm run test-back -- --coverage
+npm run test-back
 ```
 
 ## Test File Structure
@@ -838,15 +839,22 @@ cd CS360_Project
 2. **Install Jest**
 
 ```bash
-npm install jest -g
+npm install --save-dev jest --force
 ```
 
 3. Run Tests with Coverage Checking
+   
+Run test suite frontend coverage
 
 ```bash
-jest --coverage
+npm run test-back -- --coverage
 ```
 
+Run test suite backend coverage
+
+```bash
+npm run test-back -- --coverage
+```
 4. Check Results
 
 - Statement Coverage: Percentage of statements that have been tested
