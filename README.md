@@ -302,9 +302,9 @@ For the tools that our group uses for testing
   
   -  Babel: It's a tool that helps convert newer JavaScript code (ES6+ and other features) to run in browsers or environments that do not support the latest version of JavaScript. Babel acts as a JavaScript compiler or transpiler that translates new JavaScript features. It is a version supported by older browsers or systems such as ES5.
   
-  -  GitHub Actions: It's a feature available on GitHub that allows you to automate tasks within the project development process such as testing, build, deployment, and All other DevOps-related tasks by GitHub Actions is a CI/CD platform (Continuous Integration / Continuous Deployment) developed to work seamlessly with GitHub.
+  -  GitHub Actions: It's a feature available on GitHub that allows you to automate tasks within the project development process such as testing, build, deployment, and All other DevOps-related tasks by GitHub Actions is a CI/CD platform (Continuous Integration / Continuous Deployment) developed to work seamlessly with GitHub.(e.g., windows-latest-18, ubuntu-latest-18)
 
-1. For Unit Testing
+  1. For Unit Testing
 
 Testing was done using the Register system. There were a total of 7 test cases.
 
@@ -313,15 +313,13 @@ which verifies that the membership application Is it correct according to the sp
 If information is entered incorrectly according to the specified format,
 there will be a warning message indicating the format is incorrect.
 
-2. For Integration Testing
+  2. For Integration Testing
 
 Testing was completed using the Register system with a total of 8 test cases.
 
 It can verify that the account can be created, updated, searched, and deleted.
 
-Able to pull all data in the database system and display it.
-
-and notify errors when problems occur.
+Able to pull all data in the database system and display it. and notify errors when problems occur.
 
 
 ## Setting Up Tests
