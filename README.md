@@ -827,6 +827,8 @@ Ran all test suites matching /backend\\tests\\account.test.js/i.
 ## Test File Structure
 ...
 ## Test Coverage
+![1](https://github.com/user-attachments/assets/096f442b-e521-47fd-96fa-d6ed02da4786)
+
 The tests in this repository cover the following functionality:
 -
 -
