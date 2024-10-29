@@ -12,13 +12,13 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:1337/api/accounts', { // Adjust the URL if needed
+            const response = await fetch(`${process.env.REACT_APP_DEV_URL}/api/auth/local`, { // Adjust the URL if needed
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    identifier: username,
+                    identifier: username, // Use identifier for username or email
                     password,
                 }),
             });
