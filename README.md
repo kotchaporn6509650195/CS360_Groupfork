@@ -294,15 +294,15 @@ chmod +x namefile.sh
 ## Unit and Integration Testing Overview
 For the tools that our group uses for testing
 
-  Jest: A testing framework designed to make it easy and fast to work with projects that use JavaScript and TypeScript, especially in projects involving React. Jest also supports testing in Node.js and JavaScript in general. too
+  -  Jest: A testing framework designed to make it easy and fast to work with projects that use JavaScript and TypeScript, especially in projects involving React. Jest also supports testing in Node.js and JavaScript in general. too
   
-  Supertest: It's a library that helps you test HTTP requests for Node.js, especially API tests using Express or Koa. It's often used in conjunction with other testing tools like Jest or Mocha to make it easier to test APIs without needing to run a server. TRUE
+  -  Supertest: It's a library that helps you test HTTP requests for Node.js, especially API tests using Express or Koa. It's often used in conjunction with other testing tools like Jest or Mocha to make it easier to test APIs without needing to run a server. TRUE
   
-  React: A user interface (UI) library developed and maintained by Facebook, often used for building interactive and responsive web applications. React is very popular for developing Single Page Applications (SPA) and is used in small to large scale projects.
+  -  React: A user interface (UI) library developed and maintained by Facebook, often used for building interactive and responsive web applications. React is very popular for developing Single Page Applications (SPA) and is used in small to large scale projects.
   
-  Babel: It's a tool that helps convert newer JavaScript code (ES6+ and other features) to run in browsers or environments that do not support the latest version of JavaScript. Babel acts as a JavaScript compiler or transpiler that translates new JavaScript features. It is a version supported by older browsers or systems such as ES5.
+  -  Babel: It's a tool that helps convert newer JavaScript code (ES6+ and other features) to run in browsers or environments that do not support the latest version of JavaScript. Babel acts as a JavaScript compiler or transpiler that translates new JavaScript features. It is a version supported by older browsers or systems such as ES5.
   
-  GitHub Actions: It's a feature available on GitHub that allows you to automate tasks within the project development process such as testing, build, deployment, and All other DevOps-related tasks by GitHub Actions is a CI/CD platform (Continuous Integration / Continuous Deployment) developed to work seamlessly with GitHub.
+  -  GitHub Actions: It's a feature available on GitHub that allows you to automate tasks within the project development process such as testing, build, deployment, and All other DevOps-related tasks by GitHub Actions is a CI/CD platform (Continuous Integration / Continuous Deployment) developed to work seamlessly with GitHub.
 
 1. For Unit Testing
 
