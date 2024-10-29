@@ -781,7 +781,10 @@ npm run test-back
 ```
 
 ## Running Tests
+```bash
 cd CS360_Project
+```
+
 1.Running Tests frontend
 ```bash
 npm run test-front
