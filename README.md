@@ -408,7 +408,8 @@ cd CS360_Project/client
 5. Edit package.json file in Folder client.
 ```bash
 nano package.json
-//เปลี่ยน test เป็น
+
+#เปลี่ยน test เป็น
 "test": "jest --coverage"
 ```
 6. Create Folder tests
@@ -422,7 +423,7 @@ touch Register.test.js
 
 nano Register.test.js
 
-//เพิ่มโค้ด automade test
+#เพิ่มโค้ด automade test
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
@@ -431,7 +432,7 @@ import Login from '../components/Login/Login';
 import '@testing-library/jest-dom';
 import { AuthContext } from '../AuthContext';
 
-// Mock the global fetch function
+# Mock the global fetch function
 global.fetch = jest.fn();
 
 const renderRegister = () => {
@@ -459,7 +460,7 @@ const mockFetchResponse = (response) => {
 
 describe('Register Component - Tests', () => {
     beforeEach(() => {
-        fetch.mockClear(); // Clear previous mock calls before each test
+        fetch.mockClear(); # Clear previous mock calls before each test
     });
 
     test('renders the register form', () => {
@@ -477,7 +478,7 @@ describe('Register Component - Tests', () => {
         renderRegister();
     
         const usernameInput = screen.getByLabelText(/Username/i);
-        fireEvent.change(usernameInput, { target: { value: 'usr' } }); // Username less than 5 characters
+        fireEvent.change(usernameInput, { target: { value: 'usr' } }); # Username less than 5 characters
         fireEvent.blur(usernameInput);
     
         await waitFor(() => {
@@ -629,16 +630,16 @@ cd CS360_Project/backend/tests/
 touch account.test.js
 nano account.test.js
 
-//เพิ่มโค้ด automade test
+#เพิ่มโค้ด automade test
 const request = require('supertest');
-const app = require('../../backend/mockConfig/server'); // ปรับเส้นทางให้ตรงกับแอป Express ของคุณ
+const app = require('../../backend/mockConfig/server'); #ปรับเส้นทางให้ตรงกับแอป Express ของคุณ
 const Account = require('../models/Account');
-const sequelize = require('../../backend/mockConfig/database'); // นำเข้าการตั้งค่า sequelize
+const sequelize = require('../../backend/mockConfig/database'); #นำเข้าการตั้งค่า sequelize
 
 describe('Integration Tests for Account API', () => {
     beforeAll(async () => {
         
-        await Account.sync({ force: true }); // ตั้งค่าฐานข้อมูลใหม่ก่อนการทดสอบ
+        await Account.sync({ force: true }); #ตั้งค่าฐานข้อมูลใหม่ก่อนการทดสอบ
 
         // สร้างบัญชีสำหรับการทดสอบ
         await Account.create({
@@ -676,7 +677,7 @@ describe('Integration Tests for Account API', () => {
     });
 
     it('should update an existing account', async () => {
-        // สร้างบัญชีเพื่อทำการอัปเดต
+        # สร้างบัญชีเพื่อทำการอัปเดต
         const createdAccount = await Account.create({
             username: 'updateuser',
             password: 'password123',
@@ -698,7 +699,7 @@ describe('Integration Tests for Account API', () => {
 
     it('should retrieve all accounts', async () => {
         const response = await request(app)
-            .get('/api/accounts') // ปรับ endpoint สำหรับการดึงบัญชี
+            .get('/api/accounts') # ปรับ endpoint สำหรับการดึงบัญชี
             .expect(200);
 
         expect(Array.isArray(response.body)).toBe(true);
@@ -707,7 +708,7 @@ describe('Integration Tests for Account API', () => {
 
     it('should return 400 for missing required fields', async () => {
         const newAccount = {
-            // ขาดบางฟิลด์ (เช่น username)
+            # ขาดบางฟิลด์ (เช่น username)
             password: 'password123',
             email: 'missinguser@example.com',
         };
@@ -735,7 +736,7 @@ describe('Integration Tests for Account API', () => {
     });
 
     it('should retrieve an account by ID', async () => {
-        // สร้างบัญชีเพื่อดึงข้อมูล
+        # สร้างบัญชีเพื่อดึงข้อมูล
         const createdAccount = await Account.create({
             username: 'retrieveduser',
             password: 'password123',
@@ -760,21 +761,21 @@ describe('Integration Tests for Account API', () => {
             .delete(`/api/accounts/${createdAccount.id}`)
             .expect(204);
 
-        // ตรวจสอบว่าบัญชีถูกลบออกจากฐานข้อมูลแล้ว
+        # ตรวจสอบว่าบัญชีถูกลบออกจากฐานข้อมูลแล้ว
         const account = await Account.findByPk(createdAccount.id);
         expect(account).toBeNull();
     });
 
     it('should return 404 for a non-existing account', async () => {
         const response = await request(app)
-            .get('/api/accounts/9999') // ใช้ ID ที่ไม่มีอยู่
+            .get('/api/accounts/9999') # ใช้ ID ที่ไม่มีอยู่
             .expect(404);
 
         expect(response.body.error).toBeDefined();
     });
 
     afterAll(async () => {
-        await sequelize.close(); // ปิดการเชื่อมต่อฐานข้อมูล
+        await sequelize.close(); # ปิดการเชื่อมต่อฐานข้อมูล
     });
 });
 ```
