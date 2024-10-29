@@ -787,7 +787,7 @@ cd CS360_Project
 
 1.Running Tests frontend
 ```bash
-npm run test-front
+npm run test-fort
 ```
 
 2.Running Tests backend
