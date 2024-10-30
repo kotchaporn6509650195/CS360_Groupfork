@@ -1,6 +1,8 @@
 .register-container {
     max-width: 400px;
     margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 10px;
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -13,7 +15,7 @@
 
     .form-group {
         margin-bottom: 15px;
-
+        
         label {
             display: block;
             margin-bottom: 5px;
@@ -30,6 +32,23 @@
 
         input[type="checkbox"] {
             margin-right: 10px;
+        }
+    }
+    .links {
+        text-align: center;
+        margin-top: 15px;
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        span {
+            margin: 0 5px;
         }
     }
 

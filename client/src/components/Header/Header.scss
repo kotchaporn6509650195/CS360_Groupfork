@@ -112,4 +112,30 @@
     background-color: #0056b3;
 }
 
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 15px;
+
+    .username {
+        font-size: 14px;
+        font-weight: 600;
+        color: white;
+    }
+
+    .logout-btn {
+        padding: 8px 16px;
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        
+        &:hover {
+            background-color: #c82333;
+        }
+    }
+}
+
 
