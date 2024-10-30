@@ -373,9 +373,9 @@ export interface ApiAccountAccount extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    username: Attribute.String;
-    password: Attribute.String;
-    email: Attribute.Email;
+    username: Attribute.String & Attribute.Required & Attribute.Unique;
+    email: Attribute.Email & Attribute.Required & Attribute.Unique;
+    password: Attribute.Password & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
