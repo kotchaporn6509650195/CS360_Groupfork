@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # CS360 1/2567 Term Project: Ecomify
 
 ## Group Information
@@ -1064,6 +1063,3 @@ describe('Register Component - Integration Tests', () => {
     });
 });
 ```
-=======
-/
->>>>>>> develop
