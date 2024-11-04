@@ -10,6 +10,8 @@ import ResetPassword from './components/Resetpassword/Resetpassword';
 import ForgotPassword from './components/Forgotpassword/Forgotpassword';
 import Newsletter from './components/Footer/Newsletter/Newsletter';
 import AppContext from './utils/context';
+import Profile from './components/Profile/Profile';
+import ChangePassword from './components/Changepassword/Changepassword';
 import { AuthProvider } from './AuthContext';
 
 function App() {
@@ -27,6 +29,8 @@ function App() {
                         <Route path="/newsletter" element={<Newsletter />} />
                         <Route path="/forgot-password" element={<ForgotPassword />} />
                         <Route path="/reset-password" element={<ResetPassword />} />
+                        <Route path="/profile" element={<Profile />} />
+                        <Route path="/change-password" element={<ChangePassword />} />
                     </Routes>
                     <Footer />
                 </AppContext>
