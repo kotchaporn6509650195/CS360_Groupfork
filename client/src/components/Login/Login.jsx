@@ -12,10 +12,9 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_DEV_URL}/api/auth/local`, { // Adjust the URL if needed
+            const response = await fetch(`${process.env.REACT_APP_DEV_URL}/api/auth/local`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -32,10 +31,14 @@ const Login = () => {
                 throw new Error(data.message || 'Failed to login');
             }
 
+            localStorage.setItem('token', data.jwt); // Ensure the token is saved
+
             // Handle successful login
             console.log('Login successful:', data); // Log user data if needed
             navigate('/'); // Redirect to the home page or dashboard
-            login({ username: data.user.username }); // Adjust according to your API response
+            
+            // Pass the username to the login function
+            login({ username: data.user.username }); // Indicate that this is the username
         } catch (err) {
             setError(err.message);
         }
@@ -72,7 +75,7 @@ const Login = () => {
                 <div className="links">
                     <a href="/reset-password">Forgot Password?</a>
                     <span> | </span>
-                    <a href="/register">Create an Account</a> {/* Note: Changed to lowercase 'register' */}
+                    <a href="/register">Create an Account</a>
                 </div>
             </form>
         </div>

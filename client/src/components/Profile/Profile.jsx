@@ -6,39 +6,45 @@ import './Profile.scss';
 const Profile = () => {
     const [user, setUser] = useState('');
     const [error, setError] = useState('');
-
     const [profileImage, setProfileImage] = useState('');
     const [description, setDescription] = useState('');
     const [isEditing, setIsEditing] = useState(false);
-
     const navigate = useNavigate();
 
-    // ฟังก์ชันสำหรับดึงข้อมูลโปรไฟล์ของผู้ใช้ที่เข้าสู่ระบบ
+    // Function to fetch the logged-in user's profile data
     const fetchUserProfile = async () => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            setError('User not authenticated. Please log in.');
+            return;
+        }
+
         try {
             const response = await fetch(`${process.env.REACT_APP_DEV_URL}/api/users/me`, {
                 method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
                 },
             });
 
             if (!response.ok) {
+                const errorData = await response.json();
+                setError(`Error fetching profile: ${errorData.message || 'Unknown error'}`);
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
 
             const data = await response.json();
-            setUser(data); // ตั้งค่าข้อมูลผู้ใช้
-            setProfileImage(data.profileImage); // สมมติว่าข้อมูลโปรไฟล์มี URL รูปภาพ
-            setDescription(data.description); // ตั้งค่าคำอธิบายจากข้อมูลผู้ใช้
+            setUser(data);
+            setProfileImage(data.profileImage);
+            setDescription(data.description || '');
         } catch (error) {
             setError(error.message);
             console.error('Error fetching user profile:', error);
         }
     };
 
-    // ฟังก์ชันสำหรับอัปโหลดรูปภาพ
+    // Function to handle image upload
     const handleImageUpload = async (event) => {
         const file = event.target.files[0];
         const formData = new FormData();
@@ -66,25 +72,33 @@ const Profile = () => {
         }
     };
 
-    // ฟังก์ชันสำหรับบันทึกคำอธิบายเพิ่มเติม
+    // Function to save additional description
     const handleDescriptionSave = async () => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            setError('User not authenticated. Please log in.');
+            return;
+        }
+
         try {
             const response = await fetch(`${process.env.REACT_APP_DEV_URL}/api/users/me`, {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ description }), // ส่งคำอธิบายเพิ่มเติมที่แก้ไขไปยังเซิร์ฟเวอร์
+                body: JSON.stringify({ description }), // Send the edited description to the server
             });
 
             if (!response.ok) {
+                const errorData = await response.json();
+                setError(`Error saving description: ${errorData.message || 'Unknown error'}`);
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
 
             const data = await response.json();
             setUser(data);
-            setIsEditing(false); // ออกจากโหมดแก้ไข
+            setIsEditing(false); // Exit editing mode
         } catch (error) {
             setError(error.message);
             console.error('Error saving description:', error);
@@ -107,15 +121,15 @@ const Profile = () => {
         <div className="profile-container">
             <h2>Profile</h2>
             <div className="profile-details">
-                <FaUserCircle className='profile-picture' onClick={() => navigate("/profile")}/>
+                <FaUserCircle className='profile-picture' onClick={() => navigate("/profile")} />
                 {profileImage && <img src={profileImage} alt="Profile" className="profile-image" />}
                 <input type="file" accept="image/*" onChange={handleImageUpload} />
-                <h3>username: {user.username}</h3>
-                <h4>email: {user.email}</h4>
+                <h3>Username: {user.username}</h3>
+                <h4>Email: {user.email}</h4>
 
-                {/* ส่วนคำอธิบายเพิ่มเติม */}
+                {/* Description section */}
                 <div className="description-section">
-                    <h4>description:</h4>
+                    <h4>Description:</h4>
                     {isEditing ? (
                         <div>
                             <textarea
@@ -124,8 +138,8 @@ const Profile = () => {
                                 rows="4"
                                 cols="50"
                             />
-                            <button className="btn-save" onClick={handleDescriptionSave}>save</button>
-                            <button className="btn-cancel" onClick={() => setIsEditing(false)}>cancel</button>
+                            <button className="btn-save" onClick={handleDescriptionSave}>Save</button>
+                            <button className="btn-cancel" onClick={() => setIsEditing(false)}>Cancel</button>
                         </div>
                     ) : (
                         <div>
@@ -133,7 +147,7 @@ const Profile = () => {
                             <button className="btn-edit" onClick={() => setIsEditing(true)}>Edit</button>
                         </div>
                     )}
-                    
+
                     <button className="btn-change-password" onClick={() => navigate("/change-password")}>Change Password</button>
                 </div>
             </div>
