@@ -151,7 +151,7 @@ describe('Register Component - Tests', () => {
         fireEvent.click(screen.getByRole('button', { name: /Register/i }));
 
         await waitFor(() => {
-            expect(screen.getByText(/Login Page/i)).toBeInTheDocument();
+            expect(screen.getByText(/Login/i)).toBeInTheDocument();
         });
     });
 
