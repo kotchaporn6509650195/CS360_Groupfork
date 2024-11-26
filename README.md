@@ -20,10 +20,8 @@ Ecomify is an e-commerce web application designed for businesses that want to ea
 
 - User Register
 - User Login
-- User Reset Password
-- Product Search
-- Shopping Cart
-- Categories
+- User Profile
+- User Change Password
   
 ### Technologies Used
 
@@ -76,13 +74,46 @@ git clone https://github.com/techit6509650419/CS360_Project.git
 ...
 cd CS360_Project
 ```
-5.ติดตั้ง dependencies ของไฟล์ backend
+5.ตร้างไฟล์ `.env` ในโฟลเดอร์ `backend`
+```bash
+cd backend
+nano .env
+```
+- เพิ่มข้อมูลต่อไปนี้ในไฟล์ `.env` โดยสุ่มค่าต่าง ๆ สำหรับแต่ละตัวแปร:
+```
+APP_KEYS=$(openssl rand -base64 32)
+API_TOKEN_SALT=$(openssl rand -base64 32)
+ADMIN_JWT_SECRET=$(openssl rand -base64 32)
+JWT_SECRET=$(openssl rand -base64 32)
+NODE_ENV=production
+DATABASE_CLIENT=sqlite
+DATABASE_FILENAME=.tmp/data.db
+```
+- คำอธิบาย:
+  - `openssl rand -base64 32` จะสร้างค่าที่สุ่มขึ้นมาในรูปแบบ Base64 ขนาด 32 ไบต์ ซึ่งเหมาะสำหรับการใช้เป็นคีย์และโทเค็นต่าง ๆ
+
+6. สร้างไฟล์ `.env` ในโฟลเดอร์ `client`
+```bash
+cd ../client
+nano .env
+```
+- เพิ่มข้อมูลต่อไปนี้ในไฟล์ `.env` โดยสุ่มค่าต่าง ๆ สำหรับแต่ละตัวแปร:
+```
+REACT_APP_API_URL=http://localhost:1337
+REACT_APP_AUTH_TOKEN=$(openssl rand -base64 32)
+REACT_APP_CLIENT_SECRET=$(openssl rand -base64 32)
+```
+- คำอธิบาย:
+  - `REACT_APP_API_URL` เป็น URL ของ API ที่ใช้ในโปรเจกต์
+  - `REACT_APP_AUTH_TOKEN` และ `REACT_APP_CLIENT_SECRET` จะถูกสุ่มขึ้นมาในรูปแบบ Base64 ขนาด 32 ไบต์
+
+7. ติดตั้ง dependencies ของไฟล์ backend
 ```bash
 cd backend
 ...
 npm install
 ```
-5.ติดตั้ง dependencies ของไฟล์ client
+8. ติดตั้ง dependencies ของไฟล์ client
 ```bash
 cd ..
 ...
@@ -90,207 +121,36 @@ cd client
 ...
 npm install
 ```
-6.ติดตั้ง PM2 Runtime
+9. เริ่มต้นเซิร์ฟเวอร์ของ backend
 ```bash
-cd ~
-...
-sudo npm install pm2@latest -g
+cd ../backend
+npm run develop
 ```
-7.แก้ไข ecosystem.config.js
+10. เริ่มต้นเซิร์ฟเวอร์ของ client
 ```bash
-pm2 init
-...
-sudo nano ecosystem.config.js
-...
-#เพิ่มข้อมูล
-module.exports = {
-  apps: [
-    {
-      name: 'ชื่อโปรเจกต์', 
-      cwd: '/home/ec2-user/เส้นทางไปยังโปรเจกต์', 
-      script: 'npm', 
-      args: 'start', 
-      env: {
-        APP_KEYS: 'Key จาก .env ในโปรเจกต์ที่รันบนเครื่องของเรา',
-        API_TOKEN_SALT: 'Salt จาก .env ในโปรเจกต์ที่รันบนเครื่องของเรา',
-        ADMIN_JWT_SECRET: 'Admin Secret จาก .env ในโปรเจกต์ที่รันบนเครื่องของเรา',
-        JWT_SECRET: 'Secret จาก .env ในโปรเจกต์ที่รันบนเครื่องของเรา',
-        NODE_ENV: 'production',
-        DATABASE_CLIENT: 'sqlite',
-        DATABASE_FILENAME: '.tmp/data.db'
-      },
-    },
-  ],
-};
-```
-8. Start PM2 ให้ Strapi ทำงาน 
-```bash
-pm2 start ecosystem.config.js
-```
-9. Start Client
-```bash
-cd CS360_Project
-...
-cd client
-...
+cd ../client
 npm start
 ```
-
   
-## How to deploy and run the project using the provided bash script [Specify the bash script path in the repo]
+## How to deploy and run the project using the provided bash script
 
 1.สร้าง AWS EC2 ตามที่ตั้งค่าไว้ และ Connect to EC2 Instance
 ```bash
 ssh -i <your-key.pem> ec2-user@<your-ec2-instance-ip>
 ```
-2.สร้างไฟล์ Bash Script
+2.นำเข้า Project จาก GitHub
 ```bash
-touch namefile.sh
-...
-nano namefile.sh
-...
-#เพิ่มข้อมูล
-#!/bin/bash
-
-#install Node.js and npm
-install_node(){
-    echo "Update the System."
-    sudo yum update -y
-
-    echo "Install the required build tools."
-    sudo yum groupinstall 'Development Tools' -y
-
-    echo "Installing Node.js..."
-    curl -fsSL https://rpm.nodesource.com/setup_20.x | sudo bash -
-    sudo yum install -y nsolid
-
-    echo "Verify Node.js installation."
-    node -v && npm -v
-}
-
-#Install Git
-install_git(){
-    echo "Installing Git..."
-    sudo yum install -y git
-}
-
-#Check for Node.js and npm
-check_node(){
-    echo "Checking for Node.js..."
-    if ! command -v node &> /dev/null
-    then
-        echo "Node.js not found."
-        install_node
-    else
-        echo "Node.js is already install."
-    fi
-}
-
-#Check for Git
-check_git(){
-    echo "Checking for Git..."
-    if ! command -v git &> /dev/null
-    then
-        echo "Git not found."
-        install_git
-    else
-        echo "Git is already install."
-    fi
-}
-
-#Install PM2 runtime
-Install_pm2() {
-    echo "Installing PM2..."
-    sudo npm install pm2@latest -g
-
-    echo "Configuring ecosystem.config.js file..."
-    pm2 init
-
-    echo "Creating ecosystem.config.js..."
-    cat <<EOL > ecosystem.config.js
-module.exports = {
-  apps: [
-    {
-      name: 'backend',
-      cwd: '/home/ec2-user/CS360_Project/backend',
-      script: 'npm',
-      args: 'start',
-      env: {
-        APP_KEYS: 'WClWO74fuhZx1LJF+lNmFw==,gDcSr2p1bMaENJ82cbN9VA==,2SXED6C6p0RxGQMf/SHH6g==,X+sMy1DzMTVjnZ7SCWJybg==',
-        API_TOKEN_SALT: 'gaD8QX66LWUlDD8HGRmhyA==',
-        ADMIN_JWT_SECRET: 'N8ACvVAH79tAWYha5My34Q==',
-        JWT_SECRET: 'qrjLUGQL3RAb9G/Knhwq6A==',
-        NODE_ENV: 'production',
-        DATABASE_CLIENT: 'sqlite',
-        DATABASE_FILENAME: '.tmp/data.db'
-      },
-    },
-  ],
-};
-EOL
-    echo "PM2 installation and configuration complete."
-}
-
-
-#Setup Project
-setup_project(){
-    #Configuration Variables
-    REPO_URL="https://github.com/techit6509650419/CS360_Project.git"
-
-    #Check for Node.js and npm
-    check_node
-
-    #Check for Git
-    check_git
-
-    #Clone the project from GitHub
-    echo "Cloning the repository form $REPO_URL..."
-    git clone $REPO_URL
-    cd CS360_Project
-
-    #Install backend project dependencies
-    cd backend
-    echo "Installing backeend project dependencies..."
-    npm install
-
-    #Install client project denpendencies
-    cd ..
-    cd client
-    echo "Installing client project dependencies..."
-    npm install
-
-    cd ..
-    #install PM2 Runtime
-    Install_pm2
-    
-    echo "Starting backend..."
-    pm2 start ecosystem.config.js
-
-    echo "Starting client..."
-    cd client
-    npm start
-
-    echo "Project setup completed."
-
-}
-
-setup_project
+git clone https://github.com/techit6509650419/CS360_Project.git
+cd CS360_Project
 ```
-3.เปลี่ยนสิทธ์การเข้าถึง
+3.รันสคริปต์ `setup.sh` เพื่อทำการติดตั้งและตั้งค่าทั้งหมด
 ```bash
-chmod +x namefile.sh
+chmod +x setup.sh
+./setup.sh
 ```
-3.รัน Bash Script
-```bash
-./namefile.sh
-```
-
-
-   
   
 [ภาพ screen capture ของหน้าเว็บแอปพลิเคชันซึ่ง deploy ไว้บน EC2]
 ![image](https://github.com/user-attachments/assets/9ecca414-cedc-40fc-b622-29b7ff8e3ba7)
-<<<<<<< HEAD
 
 ## Unit and Integration Testing Overview
 For the tools that our group uses for testing
@@ -642,7 +502,7 @@ describe('Integration Tests for Account API', () => {
         
         await Account.sync({ force: true }); #ตั้งค่าฐานข้อมูลใหม่ก่อนการทดสอบ
 
-        # สร้างบัญชีสำหรับการทดสอบ
+        # สร้าง��ัญชีสำหรับการทดสอบ
         await Account.create({
             username: 'testuser1',
             password: 'password123',
