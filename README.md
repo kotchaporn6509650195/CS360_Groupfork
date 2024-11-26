@@ -127,6 +127,7 @@ cd ../backend
 npm run develop
 ```
 10. เริ่มต้นเซิร์ฟเวอร์ของ client
+เปิด Terminal ใหม่อีกอันหนึ่ง
 ```bash
 cd ../client
 npm start
@@ -147,6 +148,22 @@ cd CS360_Project
 ```bash
 chmod +x setup.sh
 ./setup.sh
+```
+4. รันเซิร์ฟเวอร์ของ backend และ client ใน Terminal ใหม่
+```bash
+# รัน backend
+cd backend
+npm run develop 
+```
+เปิด Terminal ใหม่อีกอันหนึ่ง
+```bash
+ssh -i <your-key.pem> ec2-user@<your-ec2-instance-ip>
+```
+
+```bash
+# รัน client
+cd ../client
+npm start
 ```
   
 [ภาพ screen capture ของหน้าเว็บแอปพลิเคชันซึ่ง deploy ไว้บน EC2]

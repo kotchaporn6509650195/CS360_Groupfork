@@ -105,7 +105,7 @@ data.db
 ############################
 # Strapi
 ############################
-
+/.env
 .env
 license.txt
 exports

@@ -59,7 +59,7 @@ const Header = () => {
                     {user ? (
                         <div className="user-menu">
                             <span className="username">{"Hello " + user.username}</span>
-                            <FaUserCircle onClick={() => navigate("/profile")}/>
+                            <FaUserCircle onClick={() => navigate("/profile")} />
                             <button className="logout-btn" onClick={handleLogout}>
                                 Logout
                             </button>

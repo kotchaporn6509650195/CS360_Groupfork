@@ -49,7 +49,6 @@ check_git(){
 
 setup_project(){
 
-    
     check_node
 
     
@@ -59,8 +58,6 @@ setup_project(){
 
     #Install backend project dependencies
     cd backend
-    echo "Installing backend project dependencies..."
-    npm install
 
     # Create .env file backend
     if [ ! -f .env ]; then
@@ -92,11 +89,12 @@ setup_project(){
         echo ".env file already exists."
     fi
 
+    echo "Installing backend project dependencies..."
+    npm install
+
     #Install client project dependencies
     cd ..
     cd client
-    echo "Installing client project dependencies..."
-    npm install
 
     # Create .env file in client
     if [ ! -f .env ]; then
@@ -117,19 +115,11 @@ setup_project(){
         echo "client/.env file already exists."
     fi
 
+    echo "Installing client project dependencies..."
+    npm install
+
     echo "Project setup completed."
 
 }
 
 setup_project
-
-#start backend
-echo "Starting backend..."
-cd ..
-cd backend
-npm run develop 
-
-#start client
-echo "Starting client..."
-cd ../client
-npm start 

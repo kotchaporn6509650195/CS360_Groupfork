@@ -9,6 +9,7 @@ const Login = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const { login } = useContext(AuthContext);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,7 +21,7 @@ const Login = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    identifier: username, // Use identifier for username or email
+                    identifier: username,
                     password,
                 }),
             });
@@ -31,14 +32,10 @@ const Login = () => {
                 throw new Error(data.message || 'Failed to login');
             }
 
-            localStorage.setItem('token', data.jwt); // Ensure the token is saved
-
-            // Handle successful login
-            console.log('Login successful:', data); // Log user data if needed
-            navigate('/'); // Redirect to the home page or dashboard
-            
-            // Pass the username to the login function
-            login({ username: data.user.username }); // Indicate that this is the username
+            localStorage.setItem('token', data.jwt);
+            login({ username: data.user.username });
+            setIsLoggedIn(true);
+            navigate('/');
         } catch (err) {
             setError(err.message);
         }
@@ -72,6 +69,9 @@ const Login = () => {
                 </div>
                 {error && <p className="error">{error}</p>}
                 <button type="submit">Login</button>
+                {isLoggedIn && (
+                    <button onClick={() => navigate('/profile')}>View Profile</button>
+                )}
                 <div className="links">
                     <a href="/reset-password">Forgot Password?</a>
                     <span> | </span>
