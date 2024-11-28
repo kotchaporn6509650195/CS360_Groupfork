@@ -141,7 +141,7 @@ npm run develop
 10. เริ่มต้นเซิร์ฟเวอร์ของ client
 เปิด Terminal ใหม่อีกอันหนึ่ง
 ```bash
-cd ../client
+cd CS360_Project/client
 npm start
 ```
   
@@ -173,7 +173,7 @@ ssh -i <your-key.pem> ec2-user@<your-ec2-instance-ip>
 ```
 ```bash
 # รัน client
-cd ../client
+cd cd CS360_Project/client
 npm start
 ```
   
