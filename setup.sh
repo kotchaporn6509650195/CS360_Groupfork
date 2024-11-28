@@ -121,5 +121,4 @@ setup_project(){
     echo "Project setup completed."
 
 }
-
 setup_project

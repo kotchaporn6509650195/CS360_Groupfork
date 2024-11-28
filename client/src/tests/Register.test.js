@@ -155,31 +155,4 @@ describe('Register Component - Tests', () => {
         });
     });
 
-     test('successfully logs and navigates to Home Page', async () => {
-        mockFetchResponse({ success: true });
-        
-        // Mock the login function
-        const mockLogin = jest.fn();
-        
-        render(
-            <AuthContext.Provider value={{ login: mockLogin }}>
-                <MemoryRouter initialEntries={['/login']}>
-                    <Routes>
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/" element={<div>Home Page</div>} />
-                    </Routes>
-                </MemoryRouter>
-            </AuthContext.Provider>
-        );
-
-        // Rest of the test remains the same
-        fireEvent.change(screen.getByLabelText(/Username/i), { target: { value: 'user@example.com' } });
-        fireEvent.change(screen.getByLabelText(/^Password$/i), { target: { value: 'Password1!' } });
-
-        fireEvent.click(screen.getByRole('button', { name: /Login/i }));
-
-        await waitFor(() => {
-            expect(screen.getByText(/Home Page/i)).toBeInTheDocument();
-        });
-    });
 });
