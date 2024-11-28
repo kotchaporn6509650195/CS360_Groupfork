@@ -46,11 +46,11 @@ Ecomify is an e-commerce web application designed for businesses that want to ea
 
 ## How to deploy and run the project manually
 
-1.สร้าง AWS EC2 ตามที่ตั้งค่าไว้ และ Connect to EC2 Instance
+1. สร้าง AWS EC2 ตามที่ตั้งค่าไว้ และ Connect to EC2 Instance
 ```bash
 ssh -i <your-key.pem> ec2-user@<your-ec2-instance-ip>
 ```
-2.ติดตั้ง Node.js และ npm
+2. ติดตั้ง Node.js และ npm
 ```bash
 cd ~
 sudo yum update -y
@@ -62,50 +62,62 @@ sudo yum install -y nsolid
 ...
 node -v && npm -v
 ```
-3.ติดตั้ง Git
+3. ติดตั้ง Git
 ```bash
 sudo yum install -y git
 ...
 git --version
 ```
-4.การนำเข้า Project จาก GitHub
+4. การนำเข้า Project จาก GitHub
 ```bash
 git clone https://github.com/techit6509650419/CS360_Project.git
 ...
 cd CS360_Project
 ```
-5.ตร้างไฟล์ `.env` ในโฟลเดอร์ `backend`
+5. สร้างไฟล์ `.env` ในโฟลเดอร์ `backend`
 ```bash
 cd backend
 nano .env
 ```
-- เพิ่มข้อมูลต่อไปนี้ในไฟล์ `.env` โดยสุ่มค่าต่าง ๆ สำหรับแต่ละตัวแปร:
+- สุ่มค่าต่อไปนี้ใน Terminal เพื่อใช้ในไฟล์ `.env`:
+```bash
+#GenerateKeys1
+openssl rand -base64 32
+#GenerateKeys2
+openssl rand -base64 32
+#GenerateKeys3
+openssl rand -base64 32
+#GenerateKeys4
+openssl rand -base64 32
 ```
-APP_KEYS=$(openssl rand -base64 32)
-API_TOKEN_SALT=$(openssl rand -base64 32)
-ADMIN_JWT_SECRET=$(openssl rand -base64 32)
-JWT_SECRET=$(openssl rand -base64 32)
+- คำดลอกค่าที่สุ่มขึ้นมาและวางลงในไฟล์ `.env` ของคุณ:
+```
+APP_KEYS=GenerateKeys1
+API_TOKEN_SALT=GenerateKeys2
+ADMIN_JWT_SECRET=GenerateKeys3
+JWT_SECRET=GenerateKeys4
 NODE_ENV=production
 DATABASE_CLIENT=sqlite
 DATABASE_FILENAME=.tmp/data.db
 ```
-- คำอธิบาย:
-  - `openssl rand -base64 32` จะสร้างค่าที่สุ่มขึ้นมาในรูปแบบ Base64 ขนาด 32 ไบต์ ซึ่งเหมาะสำหรับการใช้เป็นคีย์และโทเค็นต่าง ๆ
-
 6. สร้างไฟล์ `.env` ในโฟลเดอร์ `client`
 ```bash
 cd ../client
 nano .env
 ```
-- เพิ่มข้อมูลต่อไปนี้ในไฟล์ `.env` โดยสุ่มค่าต่าง ๆ สำหรับแต่ละตัวแปร:
+- สุ่มค่าต่อไปนี้ใน Terminal เพื่อใช้ในไฟล์ `.env`:
+```bash
+#GenerateKeys1
+openssl rand -base64 32
+#GenerateKeys2
+openssl rand -base64 32
 ```
-REACT_APP_API_URL=http://localhost:1337
-REACT_APP_AUTH_TOKEN=$(openssl rand -base64 32)
-REACT_APP_CLIENT_SECRET=$(openssl rand -base64 32)
+- คำดลอกค่าที่สุ่มขึ้นมาและวางลงในไฟล์ `.env` ของคุณ:
 ```
-- คำอธิบาย:
-  - `REACT_APP_API_URL` เป็น URL ของ API ที่ใช้ในโปรเจกต์
-  - `REACT_APP_AUTH_TOKEN` และ `REACT_APP_CLIENT_SECRET` จะถูกสุ่มขึ้นมาในรูปแบบ Base64 ขนาด 32 ไบต์
+REACT_APP_API_URL=http://<YOUR_IP_ADDRESS>:1337
+REACT_APP_AUTH_TOKEN=GenerateKeys1
+REACT_APP_CLIENT_SECRET=GenerateKeys2
+```
 
 7. ติดตั้ง dependencies ของไฟล์ backend
 ```bash
@@ -159,7 +171,6 @@ npm run develop
 ```bash
 ssh -i <your-key.pem> ec2-user@<your-ec2-instance-ip>
 ```
-
 ```bash
 # รัน client
 cd ../client
@@ -515,7 +526,7 @@ describe('Integration Tests for Account API', () => {
         
         await Account.sync({ force: true }); #ตั้งค่าฐานข้อมูลใหม่ก่อนการทดสอบ
 
-        # สร้าง��ัญชีสำหรับการทดสอบ
+        # สร้างบัญชีสำหรับการทดสอบ
         await Account.create({
             username: 'testuser1',
             password: 'password123',
