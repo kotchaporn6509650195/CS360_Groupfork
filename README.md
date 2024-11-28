@@ -277,7 +277,7 @@ nano package.json
 
 ```
 
-- **Front-end (client) past
+- **Front-end (client) past**
 
 4. Enter Folder client
 ```bash
@@ -490,13 +490,9 @@ describe('Register Component - Tests', () => {
 ```
 8. Exit Folder client
 ```bash
-cd ..
-
-cd ..
-
-cd ..
+cd ../../../
 ```
-- **backend part
+- **backend part**
 
 1. Create Folder tests in Folder backEnd
 ```bash
