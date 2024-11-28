@@ -7,6 +7,8 @@
     "develop": "strapi develop",
     "start": "strapi start",
     "build": "strapi build",
+    "test": "jest --coverage",
+    "test-back": "jest backend/tests/account.test.js",
     "strapi": "strapi",
     "deploy": "strapi deploy"
   },
@@ -20,7 +22,10 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "5.3.4",
-    "styled-components": "5.3.3"
+    "styled-components": "5.3.3",
+    "express": "^4.18.2",
+    "sequelize": "^6.0.0",
+    "sqlite3": "^5.0.0"
   },
   "author": {
     "name": "A Strapi developer"
@@ -32,5 +37,9 @@
     "node": ">=18.0.0 <=20.x.x",
     "npm": ">=6.0.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3"
+  }
 }
