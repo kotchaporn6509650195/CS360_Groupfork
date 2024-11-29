@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - '*'
-      
+
 jobs:
   backend-build-and-test:
     runs-on: ubuntu-latest
