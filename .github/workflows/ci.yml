@@ -3,8 +3,8 @@ name: CI - Backend and Frontend Docker Testing
 on:
   push:
     branches:
-      - develop-CI/CD
-
+      - '*'
+      
 jobs:
   backend-build-and-test:
     runs-on: ubuntu-latest
