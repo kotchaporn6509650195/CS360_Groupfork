@@ -1,23 +1,32 @@
-FROM node:18-alpine AS build
+# ใช้ Node.js เป็น base image
+FROM node:20
 
+# ตั้งค่า working directory
 WORKDIR /usr/src/app
 
-COPY package.json package-lock.json ./
+# คัดลอก package.json และ package-lock.json
+COPY package*.json ./
 
-RUN npm install
+# ติดตั้ง dependencies
+RUN npm install --force
 
+# คัดลอกโค้ดทั้งหมดไปยัง container
 COPY . .
 
-RUN npm run build
+# สร้างไฟล์ .env โดยสุ่มค่าต่าง ๆ
+RUN echo "HOST=0.0.0.0" >> .env && \
+    echo "PORT=1337" >> .env && \
+    echo "APP_KEYS=$(openssl rand -base64 32),$(openssl rand -base64 32),$(openssl rand -base64 32),$(openssl rand -base64 32)" >> .env && \
+    echo "API_TOKEN_SALT=$(openssl rand -base64 16)" >> .env && \
+    echo "ADMIN_JWT_SECRET=$(openssl rand -base64 32)" >> .env && \
+    echo "TRANSFER_TOKEN_SALT=$(openssl rand -base64 16)" >> .env && \
+    echo "# Database" >> .env && \
+    echo "DATABASE_CLIENT=sqlite" >> .env && \
+    echo "DATABASE_FILENAME=.tmp/data.db" >> .env && \
+    echo "JWT_SECRET=$(openssl rand -base64 32)" >> .env
 
-FROM node:18-alpine
-
-WORKDIR /usr/src/app
-
-COPY --from=build /usr/src/app/node_modules ./node_modules
-
-COPY --from=build /usr/src/app .
-
+# เปิด port ที่ต้องการ
 EXPOSE 1337
 
-CMD ["npm", "start"]
+# รันแอปพลิเคชัน
+CMD ["npm", "run", "develop"]
