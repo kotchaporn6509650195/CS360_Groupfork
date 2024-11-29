@@ -19,13 +19,13 @@
     "@strapi/strapi": "4.25.11",
     "backend": "file:",
     "better-sqlite3": "8.6.0",
+    "express": "^4.18.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "5.3.4",
-    "styled-components": "5.3.3",
-    "express": "^4.18.2",
     "sequelize": "^6.0.0",
-    "sqlite3": "^5.0.0"
+    "sqlite3": "^5.0.0",
+    "styled-components": "5.3.3"
   },
   "author": {
     "name": "A Strapi developer"
