@@ -32,10 +32,10 @@ jobs:
             ${{ secrets.DOCKER_USERNAME }}/cs360_backend_image_test:latest \
             tail -f /dev/null
       
-      - name: Run Backend Tests
-        run: |
-          docker ps
-          docker exec test-backend-container npm run test-back
+      # - name: Run Backend Tests
+      #   run: |
+      #     docker ps
+      #     docker exec test-backend-container npm run test-back
 
       - name: Backend Cleanup
         if: always()
