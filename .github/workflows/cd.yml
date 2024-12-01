@@ -1,0 +1,86 @@
+name: CD - Deploy to EC2 with Docker (Human trigger)
+
+on:
+  workflow_run:
+    workflows: ["CI - Backend and Frontend Docker Testing"]
+    types:
+      - completed
+    
+  # push:
+  #   branches:
+  #     - '*'
+      
+
+jobs:
+  check-image-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout code
+      - name: Checkout Repository
+        uses: actions/checkout@v3    
+
+      # Step 2: Check if Docker Images Exist
+      - name: Check if Docker Images Exist
+        id: check_images
+        run: |
+          # Check if the client Docker image exists
+          CLIENT_REPOSITORY="${{ secrets.DOCKER_USERNAME }}/cs360_frontend_image_test"  # Replace with your DockerHub repository name
+          CLIENT_TAG="latest"
+          CLIENT_RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" -u "${{ secrets.DOCKER_USERNAME }}:${{ secrets.DOCKER_TOKEN }}" https://hub.docker.com/v2/repositories/${CLIENT_REPOSITORY}/tags/${CLIENT_TAG}/)
+          if [ "$CLIENT_RESPONSE" -ne 200 ]; then
+              echo "Client Docker image not found. Exiting workflow."
+              exit 1
+          fi
+          echo "Client Docker image exists."
+
+          # Check if the backend Docker image exists
+          BACKEND_REPOSITORY="${{ secrets.DOCKER_USERNAME }}/cs360_backend_image_test"  # Replace with your DockerHub repository name
+          BACKEND_TAG="latest"
+          BACKEND_RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" -u "${{ secrets.DOCKER_USERNAME }}:${{ secrets.DOCKER_TOKEN }}" https://hub.docker.com/v2/repositories/${BACKEND_REPOSITORY}/tags/${BACKEND_TAG}/)
+          if [ "$BACKEND_RESPONSE" -ne 200 ]; then
+              echo "Backend Docker image not found. Exiting workflow."
+              exit 1
+          fi
+          echo "Backend Docker image exists. Proceeding to deployment."
+
+      # Step 3: Set AWS Credentials in Environment Variables
+      - name: Set AWS Credentials
+        if: ${{ steps.check_images.outcome == 'success' }}
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+        run: echo "AWS credentials set."
+
+      # Step 4: Create EC2 Instance and Deploy the Application
+      - name: Create EC2 Instance and Deploy the Application
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+        run: |
+          # Define instance details
+          INSTANCE_ID=$(aws ec2 run-instances \
+            --image-id ami-06b21ccaeff8cd686 \
+            --instance-type t2.medium \
+            --key-name ${{ secrets.AWS_KP_NAME }} \
+            --security-group-ids ${{ secrets.AWS_SG_ID }} \
+            --user-data file://user-data.sh \
+            --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=MyInstanceName}]' \
+            --query 'Instances[0].InstanceId' \
+            --output text)
+
+          echo "Instance ID: $INSTANCE_ID"
+
+          # Wait for the instance to be running
+          aws ec2 wait instance-running --instance-ids $INSTANCE_ID
+
+          # Output the instance public IP
+          INSTANCE_PUBLIC_IP=$(aws ec2 describe-instances \
+            --instance-ids $INSTANCE_ID \
+            --query 'Reservations[0].Instances[0].PublicIpAddress' \
+            --output text)
+          echo "Instance Public IP: $INSTANCE_PUBLIC_IP"

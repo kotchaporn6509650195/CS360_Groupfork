@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - '*'
-      - develop-CI/CD
+  # workflow_dispatch:
 
 jobs:
   backend-build-and-test:
@@ -18,11 +18,15 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
       
-      - name: Build and Push Backend Docker Image
+      - name: Build Backend Docker Image
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/cs360_backend_image_test:latest -f backend/Dockerfile .
+
+      - name: Push Backend Docker Image
+        run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/cs360_backend_image_test:latest
-      
+
+
       - name: Pull and Run Backend Container
         run: |
           docker pull ${{ secrets.DOCKER_USERNAME }}/cs360_backend_image_test:latest
@@ -35,7 +39,7 @@ jobs:
       - name: Run Backend Tests
         run: |
           docker ps
-          docker exec test-backend-container npm run test-back
+          docker exec test-backend-container npm run test
 
       - name: Backend Cleanup
         if: always()
@@ -54,11 +58,14 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
-      - name: Build and Push Frontend Docker Image
+      - name: Build Frontend Docker Image
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/cs360_frontend_image_test:latest -f client/Dockerfile .
+          
+      - name: Push Frontend Docker Image
+        run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/cs360_frontend_image_test:latest
-
+      
       - name: Pull and Run Frontend Container
         run: |
           docker pull ${{ secrets.DOCKER_USERNAME }}/cs360_frontend_image_test:latest
@@ -70,7 +77,7 @@ jobs:
 
       - name: Install Dependencies and Run Frontend Tests
         run: |
-          docker exec test-frontend-container sh -c "npm install --force && npm run test"
+          docker exec test-frontend-container sh -c "npm install --force && npm install sweetalert2 --force && npm run test"
 
       - name: Frontend Cleanup
         if: always()
