@@ -21,7 +21,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3    
 
-      # Step 2: Check if Docker Images Exists
+      # Step 2: Check if Docker Images Exist
       - name: Check if Docker Images Exist
         id: check_images
         run: |
