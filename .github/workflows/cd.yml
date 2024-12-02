@@ -6,9 +6,10 @@ on:
     types:
       - completed
     
-  # push:
-  #   branches:
-  #     - '*'
+  push:
+    branches:
+      - '*'
+      - develop-CI/CD
       
 
 jobs:
