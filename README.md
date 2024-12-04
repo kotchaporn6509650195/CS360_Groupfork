@@ -74,7 +74,7 @@ git clone https://github.com/techit6509650419/CS360_Project.git
 ...
 cd CS360_Project
 ```
-5.ตร้างไฟล์ `.env` ในโฟลเดอร์ `backend`
+5.หากไม่มี `.env` ให้สร้างไฟล์ `.env` ในโฟลเดอร์ `backend`
 ```bash
 cd backend
 nano .env
@@ -92,7 +92,7 @@ DATABASE_FILENAME=.tmp/data.db
 - คำอธิบาย:
   - `openssl rand -base64 32` จะสร้างค่าที่สุ่มขึ้นมาในรูปแบบ Base64 ขนาด 32 ไบต์ ซึ่งเหมาะสำหรับการใช้เป็นคีย์และโทเค็นต่าง ๆ
 
-6. สร้างไฟล์ `.env` ในโฟลเดอร์ `client`
+6. หากไม่มี `.env` ให้สร้างไฟล์ `.env` ในโฟลเดอร์ `client`
 ```bash
 cd ../client
 nano .env
@@ -110,15 +110,12 @@ REACT_APP_CLIENT_SECRET=$(openssl rand -base64 32)
 7. ติดตั้ง dependencies ของไฟล์ backend
 ```bash
 cd backend
-...
 npm install
 ```
 8. ติดตั้ง dependencies ของไฟล์ client
 ```bash
 cd ..
-...
 cd client
-...
 npm install
 ```
 9. เริ่มต้นเซิร์ฟเวอร์ของ backend
