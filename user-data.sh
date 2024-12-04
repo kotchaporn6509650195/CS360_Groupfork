@@ -11,7 +11,7 @@ sudo systemctl enable docker
 sudo usermod -aG docker ec2-user
 newgrp docker
 
-echo "Starting Docker pull and run..."
+#echo "Starting Docker pull and run..."
 
 sudo docker pull korakrit/cs360_frontend_image_test:latest
 sudo docker run -d -p 3000:3000 --name cs360_frontend_container korakrit/cs360_frontend_image_test:latest
