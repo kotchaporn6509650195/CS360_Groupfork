@@ -1,4 +1,14 @@
 #!/bin/bash
+#Update package lists
+sudo yum update -y
+
+#Install Nginx
+sudo yum install nginx -y
+
+#Start and enable Nginx
+sudo systemctl start nginx
+sudo systemctl enable nginx
+
 # Update the package manager and install Docker
 sudo yum update -y
 sudo yum install -y docker
