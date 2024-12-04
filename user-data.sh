@@ -23,7 +23,6 @@ echo \"REACT_APP_STRIPE_PUBLISHABLE_KEY=\$(openssl rand -hex 32)\" >> /usr/src/a
 echo "Exiting script..."
 exit 0"
 sudo docker exec cs360_frontend_container npm run build
-
 sudo docker pull korakrit/cs360_backend_image_test:latest
 sudo docker run -p 1337:1337 --name cs360_backend_container korakrit/cs360_backend_image_test:latest
 
