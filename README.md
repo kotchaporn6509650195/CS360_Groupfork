@@ -470,38 +470,11 @@ describe('Register Component - Tests', () => {
         });
     });
 
-     test('successfully logs and navigates to Home Page', async () => {
-        mockFetchResponse({ success: true });
-        
-        // Mock the login function
-        const mockLogin = jest.fn();
-        
-        render(
-            <AuthContext.Provider value={{ login: mockLogin }}>
-                <MemoryRouter initialEntries={['/login']}>
-                    <Routes>
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/" element={<div>Home Page</div>} />
-                    </Routes>
-                </MemoryRouter>
-            </AuthContext.Provider>
-        );
-
-        // Rest of the test remains the same
-        fireEvent.change(screen.getByLabelText(/Username/i), { target: { value: 'user@example.com' } });
-        fireEvent.change(screen.getByLabelText(/^Password$/i), { target: { value: 'Password1!' } });
-
-        fireEvent.click(screen.getByRole('button', { name: /Login/i }));
-
-        await waitFor(() => {
-            expect(screen.getByText(/Home Page/i)).toBeInTheDocument();
-        });
-    });
 });
 ```
 8. Exit Folder client
 ```bash
-cd ../../../
+cd ../../..
 ```
 - **backend part**
 
@@ -666,9 +639,7 @@ describe('Integration Tests for Account API', () => {
 ```
 3. Exit Folder backend
 ```bash
-cd ..
-
-cd ..
+cd ../..
 ```
 - **github action flie .yml part
   
@@ -777,7 +748,6 @@ npm run test-back
 √ Shows error when passwords do not match
 √ Shows error when required fields are missing
 √ Successfully registers user and navigates to the login page
-√ Successfully registers and navigates to the home page
 ```
 - **Integration Tests** (account.test.js) `backend/tests/account.test.js` Tests for Account API
 
@@ -850,40 +820,34 @@ You can view test results on both GitHub and in your terminal.
 > test-front
 > jest client/src/tests/Register --coverage
 
-  console.log
-    Login successful: { success: true }
-
-      at log (client/src/components/Login/Login.jsx:36:21)
-
- PASS  client/src/tests/Register.test.js
+PASS client/src/tests/Register.test.js
   Register Component - Tests
-    √ renders the register form (75 ms)                                                                                                                                                                           
-    √ shows error when username is shorter than 5 characters (17 ms)                                                                                                                                              
-    √ shows error message for invalid email format (14 ms)                                                                                                                                                        
-    √ shows error for password less than 8 characters (17 ms)                                                                                                                                                     
-    √ shows error for password without uppercase letter (9 ms)                                                                                                                                                    
-    √ shows error for password without a number (22 ms)                                                                                                                                                           
-    √ shows error when passwords do not match (15 ms)                                                                                                                                                             
-    √ shows error when required fields are missing (16 ms)                                                                                                                                                        
-    √ successfully registers user and navigates to login (47 ms)                                                                                                                                                  
-    √ successfully logs and navigates to Home Page (48 ms)                                                                                                                                                        
-                                                                                                                                                                                                                  
--------------------------|---------|----------|---------|---------|--------------------------------                                                                                                               
-File                     | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                                                                                                                             
--------------------------|---------|----------|---------|---------|--------------------------------
-All files                |    81.9 |    70.37 |      85 |   81.25 | 
- src                     |      25 |      100 |       0 |      25 | 
-  AuthContext.js         |      25 |      100 |       0 |      25 | 7-17
- src/components/Login    |      95 |    33.33 |     100 |      95 | 
-  Login.jsx              |      95 |    33.33 |     100 |      95 | 32
- src/components/Register |   84.41 |       75 |     100 |   83.82 | 
-  Register.jsx           |   84.41 |       75 |     100 |   83.82 | 61-62,67-68,72-74,87-88,93,154
--------------------------|---------|----------|---------|---------|--------------------------------
+    ✓ renders the register form (74 ms)
+    ✓ shows error when username is shorter than 5 characters (16 ms)
+    ✓ shows error message for invalid email format (8 ms)
+    ✓ shows error for password less than 8 characters (7 ms)
+    ✓ shows error for password without uppercase letter (6 ms)
+    ✓ shows error for password without a number (7 ms)
+    ✓ shows error when passwords do not match (6 ms)
+    ✓ shows error when required fields are missing (16 ms)
+    ✓ successfully registers user and navigates to login (47 ms)
+
+-------------------------|---------|----------|---------|---------|------------------------------------
+File                     | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                  
+-------------------------|---------|----------|---------|---------|------------------------------------
+All files                |   61.81 |    64.28 |   59.09 |    59.4 |                                    
+ src                     |      25 |      100 |       0 |      25 |                                    
+  AuthContext.js         |      25 |      100 |       0 |      25 | 7-17                               
+ src/components/Login    |    4.34 |        0 |       0 |    4.34 |                                    
+  Login.jsx              |    4.34 |        0 |       0 |    4.34 | 7-73                               
+ src/components/Register |   82.27 |       75 |   92.85 |   81.42 |                                    
+  Register.jsx           |   82.27 |       75 |   92.85 |   81.42 | 62-63,68-69,73-75,88-89,98-108,169 
+-------------------------|---------|----------|---------|---------|------------------------------------
 Test Suites: 1 passed, 1 total
-Tests:       10 passed, 10 total
+Tests:       9 passed, 9 total
 Snapshots:   0 total
-Time:        1.999 s, estimated 3 s
-Ran all test suites matching /client\\src\\tests\\Register/i.
+Time:        1.277 s, estimated 2 s
+Ran all test suites matching /client\/src\/tests\/Register/i.
 ```
 - Run `npm run test-back -- --coverage` to view feature Account test result output:
 
