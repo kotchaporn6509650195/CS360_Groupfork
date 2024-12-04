@@ -11,7 +11,7 @@ sudo systemctl enable docker
 sudo usermod -aG docker ec2-user
 newgrp docker
 
-#echo "Starting Docker pull and run..."
+echo "Starting Docker pull and run..."
 
 sudo docker pull korakrit/cs360_frontend_image_test:latest
 sudo docker run -d -p 3000:3000 --name cs360_frontend_container korakrit/cs360_frontend_image_test:latest
@@ -23,6 +23,7 @@ echo \"REACT_APP_STRIPE_PUBLISHABLE_KEY=\$(openssl rand -hex 32)\" >> /usr/src/a
 echo "Exiting script..."
 exit 0"
 sudo docker exec cs360_frontend_container npm run build
+
 sudo docker pull korakrit/cs360_backend_image_test:latest
 sudo docker run -p 1337:1337 --name cs360_backend_container korakrit/cs360_backend_image_test:latest
 
