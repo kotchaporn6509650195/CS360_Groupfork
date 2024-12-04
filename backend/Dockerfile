@@ -1,4 +1,4 @@
-# ใช้ Node.js เป็น base image
+# ใช้ Node.js เป็น base images
 FROM node:18-alpine AS build
 
 # กำหนด Working Directory
