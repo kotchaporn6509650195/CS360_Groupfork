@@ -912,3 +912,97 @@ describe('Register Component - Integration Tests', () => {
     });
 });
 ```
+
+# CI/CD Pipeline กับ Docker และการ Deploy ไปยัง EC2
+
+## ภาพรวม
+ในโปรเจคนี้มีการตั้งค่า **CI/CD pipeline** ที่ช่วยอัตโนมัติการสร้าง, ทดสอบ, และการ deploy ทั้งแอปพลิเคชัน **backend** และ **frontend** โดยใช้ **Docker** และ **AWS EC2** กระบวนการนี้ถูกตั้งค่าไว้ใน **GitHub Actions** ประกอบไปด้วยขั้นตอนหลักดังนี้:
+
+### CI (Continuous Integration):
+- สร้าง Docker images สำหรับ backend และ frontend
+- ทดสอบแอปพลิเคชันทั้งสอง
+
+### CD (Continuous Deployment):
+- Deploy แอปพลิเคชันไปยัง EC2 instance บน AWS
+
+## โครงสร้างของ Pipeline
+Pipeline ถูกแบ่งออกเป็น 3 งานหลัก ๆ:
+
+### 1. CI_backend:
+- สร้างและทดสอบ Docker image สำหรับ backend
+- Push image ไปที่ DockerHub
+- รันการทดสอบใน Docker container
+
+### 2. CI_frontend:
+- สร้างและทดสอบ Docker image สำหรับ frontend
+- Push image ไปที่ DockerHub
+- รันการทดสอบใน Docker container
+
+### 3. CD:
+- ตรวจสอบว่า Docker images สำหรับ frontend และ backend มีอยู่ใน DockerHub หรือไม่
+- Deploy แอปพลิเคชันไปยัง EC2 instance บน AWS
+
+## การอธิบายแต่ละ Job ใน Pipeline
+
+### 1. CI_backend (Backend Docker Build and Testing)
+- **Checkout Code**: ดึงโค้ดล่าสุดจาก repository
+- **Login to DockerHub**: ทำการล็อกอินเข้าสู่ DockerHub โดยใช้ secrets ที่เก็บใน GitHub
+- **Build Docker Image for Backend**: ใช้ `backend/Dockerfile` ในการสร้าง Docker image สำหรับ backend
+- **Push Backend Docker Image**: Push Docker image ไปที่ DockerHub
+- **Run Backend Container**: รัน Docker container เพื่อทดสอบ backend
+- **Run Tests**: รันการทดสอบใน Docker container
+- **Cleanup**: ลบ Docker container หลังจากการทดสอบเสร็จ
+
+### 2. CI_frontend (Frontend Docker Build and Testing)
+- **Checkout Code**: ดึงโค้ดล่าสุดจาก repository
+- **Login to DockerHub**: ทำการล็อกอินเข้าสู่ DockerHub โดยใช้ secrets ที่เก็บใน GitHub
+- **Build Docker Image for Frontend**: ใช้ `client/Dockerfile` ในการสร้าง Docker image สำหรับ frontend
+- **Push Frontend Docker Image**: Push Docker image ไปที่ DockerHub
+- **Run Frontend Container**: รัน Docker container เพื่อทดสอบ frontend
+- **Install Dependencies and Run Tests**: ติดตั้ง dependencies และรันการทดสอบ
+- **Cleanup**: ลบ Docker container หลังจากการทดสอบเสร็จ
+
+### 3. CD (Deploy to AWS EC2)
+- **Checkout Code**: ดึงโค้ดล่าสุดจาก repository
+- **Check Docker Images**: ตรวจสอบว่า Docker image สำหรับ backend และ frontend มีอยู่ใน DockerHub หรือไม่
+- **Set AWS Credentials**: ตั้งค่าคีย์ AWS เพื่อทำการ authenticate กับ AWS
+- **Create EC2 Instance and Deploy Application**:
+  - สร้าง EC2 instance ใหม่ด้วยการตั้งค่าที่กำหนด (เช่น AMI, instance type, security group เป็นต้น)
+  - Deploy แอปพลิเคชันไปยัง EC2 instance
+  - รอให้ EC2 instance พร้อมใช้งาน
+  - แสดง IP สาธารณะของ EC2 instance สำหรับเข้าถึงแอปพลิเคชันที่ Deploy ไว้
+
+## ตัวแปรและ Secrets ที่ต้องตั้งค่า
+โปรดตรวจสอบว่าได้ตั้งค่า secrets ต่อไปนี้ใน GitHub repository ในส่วน **Secrets**:
+
+- `DOCKER_USERNAME`: ชื่อผู้ใช้ DockerHub ของคุณ
+- `DOCKER_TOKEN`: DockerHub access token ของคุณ
+- `AWS_ACCESS_KEY_ID`: AWS Access Key สำหรับการ authenticate
+- `AWS_SECRET_ACCESS_KEY`: AWS Secret Key สำหรับการ authenticate
+- `AWS_SESSION_TOKEN`: AWS session token สำหรับการ authenticate (ถ้าจำเป็น)
+- `AWS_REGION`: AWS region ที่ใช้สำหรับการ Deploy EC2
+- `AWS_KP_NAME`: ชื่อของ AWS key pair สำหรับเข้าถึง EC2 ผ่าน SSH
+- `AWS_SG_ID`: ID ของ AWS security group สำหรับ EC2
+
+## EC2 User Data Script
+สคริปต์ `user-data.sh` ใช้ในการตั้งค่า EC2 instance ให้มีการติดตั้ง dependencies และการตั้งค่าที่จำเป็นเมื่อ instance ถูกสร้างขึ้น
+
+## วิธีการใช้งาน Pipeline
+
+### 1. Push Code ไปยัง Repository:
+- ทุกครั้งที่มีการ commit โค้ดไปยัง branch ใด ๆ (ยกเว้นที่ถูกยกเว้น) จะทำให้ pipeline ทำงานโดยอัตโนมัติ
+
+### 2. ติดตามสถานะของ Pipeline:
+- คุณสามารถติดตามสถานะของ CI/CD pipeline ได้จากแท็บ "Actions" ใน GitHub
+
+### 3. การ Deploy:
+- เมื่อ pipeline ทำงานเสร็จสิ้นสำเร็จ แอปพลิเคชันจะถูก Deploy ไปยัง EC2 instance และสามารถเข้าถึงได้ผ่าน IP สาธารณะของ EC2
+
+## การแก้ไขปัญหา
+- หากไม่พบ Docker images บน DockerHub ให้ตรวจสอบว่า images ถูกสร้างและ Push สำเร็จหรือไม่
+- หาก EC2 instance ไม่สามารถเริ่มต้นหรือลิงก์ไม่ได้ ให้ตรวจสอบการตั้งค่า security group และตรวจสอบว่า IP สาธารณะถูกต้อง
+
+## สรุป
+CI/CD pipeline นี้ช่วยอัตโนมัติขั้นตอนการทดสอบ, สร้าง Docker images และ Deploy แอปพลิเคชันไปยัง AWS EC2 ซึ่งทำให้กระบวนการพัฒนามีประสิทธิภาพและรวดเร็วขึ้น
+message.txt
+8 KB
