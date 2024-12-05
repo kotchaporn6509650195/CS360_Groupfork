@@ -15,13 +15,14 @@
     "react-router-dom": "^6.4.5",
     "react-scripts": "5.0.1",
     "sass": "^1.56.2",
-    "sweetalert2": "^11.14.4",
+    "sweetalert2": "^11.14.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "jest --coverage",
+    "test-front": "jest client/src/tests/Register",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -54,11 +55,17 @@
       "text",
       "lcov"
     ],
-    "coverageDirectory": "./coverage"
+    "coverageDirectory": "./coverage",
+    "moduleNameMapper": {
+      "\\.(css|less|scss)$": "identity-obj-proxy"
+    },
+    "testEnvironment": "jsdom"
   },
   "devDependencies": {
+    "@babel/preset-react": "^7.25.9",
     "@testing-library/jest-dom": "^6.6.2",
     "@testing-library/react": "^16.0.1",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^27.5.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"

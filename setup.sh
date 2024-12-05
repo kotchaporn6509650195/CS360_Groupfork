@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 install_node(){
     echo "Update the System."
     sudo yum update -y
@@ -46,12 +45,10 @@ check_git(){
     fi
 }
 
-
 setup_project(){
 
     check_node
 
-    
     check_git
 
     cd CS360_Project
