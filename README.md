@@ -46,11 +46,11 @@ Ecomify is an e-commerce web application designed for businesses that want to ea
 
 ## How to deploy and run the project manually
 
-1.สร้าง AWS EC2 ตามที่ตั้งค่าไว้ และ Connect to EC2 Instance
+1. สร้าง AWS EC2 ตามที่ตั้งค่าไว้ และ Connect to EC2 Instance
 ```bash
 ssh -i <your-key.pem> ec2-user@<your-ec2-instance-ip>
 ```
-2.ติดตั้ง Node.js และ npm
+2. ติดตั้ง Node.js และ npm
 ```bash
 cd ~
 sudo yum update -y
@@ -62,13 +62,13 @@ sudo yum install -y nsolid
 ...
 node -v && npm -v
 ```
-3.ติดตั้ง Git
+3. ติดตั้ง Git
 ```bash
 sudo yum install -y git
 ...
 git --version
 ```
-4.การนำเข้า Project จาก GitHub
+4. การนำเข้า Project จาก GitHub
 ```bash
 git clone https://github.com/techit6509650419/CS360_Project.git
 ...
@@ -79,12 +79,23 @@ cd CS360_Project
 cd backend
 nano .env
 ```
-- เพิ่มข้อมูลต่อไปนี้ในไฟล์ `.env` โดยสุ่มค่าต่าง ๆ สำหรับแต่ละตัวแปร:
+- สุ่มค่าต่อไปนี้ใน Terminal เพื่อใช้ในไฟล์ `.env`:
+```bash
+#GenerateKeys1
+openssl rand -base64 32
+#GenerateKeys2
+openssl rand -base64 32
+#GenerateKeys3
+openssl rand -base64 32
+#GenerateKeys4
+openssl rand -base64 32
 ```
-APP_KEYS=$(openssl rand -base64 32)
-API_TOKEN_SALT=$(openssl rand -base64 32)
-ADMIN_JWT_SECRET=$(openssl rand -base64 32)
-JWT_SECRET=$(openssl rand -base64 32)
+- คำดลอกค่าที่สุ่มขึ้นมาและวางลงในไฟล์ `.env` ของคุณ:
+```
+APP_KEYS=GenerateKeys1
+API_TOKEN_SALT=GenerateKeys2
+ADMIN_JWT_SECRET=GenerateKeys3
+JWT_SECRET=GenerateKeys4
 NODE_ENV=production
 DATABASE_CLIENT=sqlite
 DATABASE_FILENAME=.tmp/data.db
@@ -97,15 +108,19 @@ DATABASE_FILENAME=.tmp/data.db
 cd ../client
 nano .env
 ```
-- เพิ่มข้อมูลต่อไปนี้ในไฟล์ `.env` โดยสุ่มค่าต่าง ๆ สำหรับแต่ละตัวแปร:
+- สุ่มค่าต่อไปนี้ใน Terminal เพื่อใช้ในไฟล์ `.env`:
+```bash
+#GenerateKeys1
+openssl rand -base64 32
+#GenerateKeys2
+openssl rand -base64 32
 ```
-REACT_APP_API_URL=http://localhost:1337
-REACT_APP_AUTH_TOKEN=$(openssl rand -base64 32)
-REACT_APP_CLIENT_SECRET=$(openssl rand -base64 32)
+- คำดลอกค่าที่สุ่มขึ้นมาและวางลงในไฟล์ `.env` ของคุณ:
 ```
-- คำอธิบาย:
-  - `REACT_APP_API_URL` เป็น URL ของ API ที่ใช้ในโปรเจกต์
-  - `REACT_APP_AUTH_TOKEN` และ `REACT_APP_CLIENT_SECRET` จะถูกสุ่มขึ้นมาในรูปแบบ Base64 ขนาด 32 ไบต์
+REACT_APP_API_URL=http://<YOUR_IP_ADDRESS>:1337
+REACT_APP_AUTH_TOKEN=GenerateKeys1
+REACT_APP_CLIENT_SECRET=GenerateKeys2
+```
 
 7. ติดตั้ง dependencies ของไฟล์ backend
 ```bash
@@ -156,7 +171,6 @@ npm run develop
 ```bash
 ssh -i <your-key.pem> ec2-user@<your-ec2-instance-ip>
 ```
-
 ```bash
 # รัน client
 cd ../client
@@ -274,7 +288,7 @@ nano package.json
 
 ```
 
-- **Front-end (client) past
+- **Front-end (client) past**
 
 4. Enter Folder client
 ```bash
@@ -456,44 +470,13 @@ describe('Register Component - Tests', () => {
         });
     });
 
-     test('successfully logs and navigates to Home Page', async () => {
-        mockFetchResponse({ success: true });
-        
-        // Mock the login function
-        const mockLogin = jest.fn();
-        
-        render(
-            <AuthContext.Provider value={{ login: mockLogin }}>
-                <MemoryRouter initialEntries={['/login']}>
-                    <Routes>
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/" element={<div>Home Page</div>} />
-                    </Routes>
-                </MemoryRouter>
-            </AuthContext.Provider>
-        );
-
-        // Rest of the test remains the same
-        fireEvent.change(screen.getByLabelText(/Username/i), { target: { value: 'user@example.com' } });
-        fireEvent.change(screen.getByLabelText(/^Password$/i), { target: { value: 'Password1!' } });
-
-        fireEvent.click(screen.getByRole('button', { name: /Login/i }));
-
-        await waitFor(() => {
-            expect(screen.getByText(/Home Page/i)).toBeInTheDocument();
-        });
-    });
 });
 ```
 8. Exit Folder client
 ```bash
-cd ..
-
-cd ..
-
-cd ..
+cd ../../..
 ```
-- **backend part
+- **backend part**
 
 1. Create Folder tests in Folder backEnd
 ```bash
@@ -516,7 +499,7 @@ describe('Integration Tests for Account API', () => {
         
         await Account.sync({ force: true }); #ตั้งค่าฐานข้อมูลใหม่ก่อนการทดสอบ
 
-        # สร้าง��ัญชีสำหรับการทดสอบ
+        # สร้างบัญชีสำหรับการทดสอบ
         await Account.create({
             username: 'testuser1',
             password: 'password123',
@@ -656,9 +639,7 @@ describe('Integration Tests for Account API', () => {
 ```
 3. Exit Folder backend
 ```bash
-cd ..
-
-cd ..
+cd ../..
 ```
 - **github action flie .yml part
   
@@ -767,7 +748,6 @@ npm run test-back
 √ Shows error when passwords do not match
 √ Shows error when required fields are missing
 √ Successfully registers user and navigates to the login page
-√ Successfully registers and navigates to the home page
 ```
 - **Integration Tests** (account.test.js) `backend/tests/account.test.js` Tests for Account API
 
@@ -840,40 +820,34 @@ You can view test results on both GitHub and in your terminal.
 > test-front
 > jest client/src/tests/Register --coverage
 
-  console.log
-    Login successful: { success: true }
-
-      at log (client/src/components/Login/Login.jsx:36:21)
-
- PASS  client/src/tests/Register.test.js
+PASS client/src/tests/Register.test.js
   Register Component - Tests
-    √ renders the register form (75 ms)                                                                                                                                                                           
-    √ shows error when username is shorter than 5 characters (17 ms)                                                                                                                                              
-    √ shows error message for invalid email format (14 ms)                                                                                                                                                        
-    √ shows error for password less than 8 characters (17 ms)                                                                                                                                                     
-    √ shows error for password without uppercase letter (9 ms)                                                                                                                                                    
-    √ shows error for password without a number (22 ms)                                                                                                                                                           
-    √ shows error when passwords do not match (15 ms)                                                                                                                                                             
-    √ shows error when required fields are missing (16 ms)                                                                                                                                                        
-    √ successfully registers user and navigates to login (47 ms)                                                                                                                                                  
-    √ successfully logs and navigates to Home Page (48 ms)                                                                                                                                                        
-                                                                                                                                                                                                                  
--------------------------|---------|----------|---------|---------|--------------------------------                                                                                                               
-File                     | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                                                                                                                             
--------------------------|---------|----------|---------|---------|--------------------------------
-All files                |    81.9 |    70.37 |      85 |   81.25 | 
- src                     |      25 |      100 |       0 |      25 | 
-  AuthContext.js         |      25 |      100 |       0 |      25 | 7-17
- src/components/Login    |      95 |    33.33 |     100 |      95 | 
-  Login.jsx              |      95 |    33.33 |     100 |      95 | 32
- src/components/Register |   84.41 |       75 |     100 |   83.82 | 
-  Register.jsx           |   84.41 |       75 |     100 |   83.82 | 61-62,67-68,72-74,87-88,93,154
--------------------------|---------|----------|---------|---------|--------------------------------
+    ✓ renders the register form (74 ms)
+    ✓ shows error when username is shorter than 5 characters (16 ms)
+    ✓ shows error message for invalid email format (8 ms)
+    ✓ shows error for password less than 8 characters (7 ms)
+    ✓ shows error for password without uppercase letter (6 ms)
+    ✓ shows error for password without a number (7 ms)
+    ✓ shows error when passwords do not match (6 ms)
+    ✓ shows error when required fields are missing (16 ms)
+    ✓ successfully registers user and navigates to login (47 ms)
+
+-------------------------|---------|----------|---------|---------|------------------------------------
+File                     | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                  
+-------------------------|---------|----------|---------|---------|------------------------------------
+All files                |   61.81 |    64.28 |   59.09 |    59.4 |                                    
+ src                     |      25 |      100 |       0 |      25 |                                    
+  AuthContext.js         |      25 |      100 |       0 |      25 | 7-17                               
+ src/components/Login    |    4.34 |        0 |       0 |    4.34 |                                    
+  Login.jsx              |    4.34 |        0 |       0 |    4.34 | 7-73                               
+ src/components/Register |   82.27 |       75 |   92.85 |   81.42 |                                    
+  Register.jsx           |   82.27 |       75 |   92.85 |   81.42 | 62-63,68-69,73-75,88-89,98-108,169 
+-------------------------|---------|----------|---------|---------|------------------------------------
 Test Suites: 1 passed, 1 total
-Tests:       10 passed, 10 total
+Tests:       9 passed, 9 total
 Snapshots:   0 total
-Time:        1.999 s, estimated 3 s
-Ran all test suites matching /client\\src\\tests\\Register/i.
+Time:        1.277 s, estimated 2 s
+Ran all test suites matching /client\/src\/tests\/Register/i.
 ```
 - Run `npm run test-back -- --coverage` to view feature Account test result output:
 
