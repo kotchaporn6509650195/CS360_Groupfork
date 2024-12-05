@@ -1,13 +1,4 @@
 #!/bin/bash
-#Update package lists
-sudo yum update -y
-
-#Install Nginx
-sudo yum install nginx -y
-
-#Start and enable Nginx
-sudo systemctl start nginx
-sudo systemctl enable nginx
 
 # Update the package manager and install Docker
 sudo yum update -y
@@ -21,7 +12,7 @@ sudo systemctl enable docker
 sudo usermod -aG docker ec2-user
 newgrp docker
 
-echo "Starting Docker pull and run..."
+#"Starting Docker pull and run..."
 
 sudo docker pull korakrit/cs360_frontend_image_test:latest
 sudo docker run -d -p 3000:3000 --name cs360_frontend_container korakrit/cs360_frontend_image_test:latest
@@ -37,4 +28,4 @@ sudo docker exec cs360_frontend_container npm run build
 sudo docker pull korakrit/cs360_backend_image_test:latest
 sudo docker run -p 1337:1337 --name cs360_backend_container korakrit/cs360_backend_image_test:latest
 
-#echo "Docker containers are running."
+# "Docker containers are running."

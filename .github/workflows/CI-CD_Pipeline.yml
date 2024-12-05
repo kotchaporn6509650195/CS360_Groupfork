@@ -169,4 +169,3 @@ jobs:
             --query 'Reservations[0].Instances[0].PublicIpAddress' \
             --output text)
           echo "Instance Public IP: $INSTANCE_PUBLIC_IP"
-
