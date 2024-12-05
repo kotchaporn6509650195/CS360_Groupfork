@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import './Register.scss';
 
 const Register = () => {
@@ -87,9 +88,23 @@ const Register = () => {
                 const errorMsg = data.error?.message || 'Failed to register';
                 throw new Error(errorMsg);
             }
-
-            navigate('/login');
+            // แสดง Pop-up แจ้งเตือนเมื่อการลงทะเบียนสำเร็จ
+            Swal.fire({
+                icon: 'success',
+                title: 'Successfully Registered!',
+                text: 'Ready to Login to use the web application.',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                navigate('/login');
+            });           
         } catch (err) {
+             // แสดง Pop-up เมื่อเกิดข้อผิดพลาด
+             Swal.fire({
+                icon: 'error',
+                title: 'Registration failed',
+                text: err.message,
+                confirmButtonText: 'Try Again'
+            });
             setError(err.message);
         }
     };

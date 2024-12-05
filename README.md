@@ -20,10 +20,8 @@ Ecomify is an e-commerce web application designed for businesses that want to ea
 
 - User Register
 - User Login
-- User Reset Password
-- Product Search
-- Shopping Cart
-- Categories
+- User Profile
+- User Change Password
   
 ### Technologies Used
 
@@ -48,11 +46,11 @@ Ecomify is an e-commerce web application designed for businesses that want to ea
 
 ## How to deploy and run the project manually
 
-1.สร้าง AWS EC2 ตามที่ตั้งค่าไว้ และ Connect to EC2 Instance
+1. สร้าง AWS EC2 ตามที่ตั้งค่าไว้ และ Connect to EC2 Instance
 ```bash
 ssh -i <your-key.pem> ec2-user@<your-ec2-instance-ip>
 ```
-2.ติดตั้ง Node.js และ npm
+2. ติดตั้ง Node.js และ npm
 ```bash
 cd ~
 sudo yum update -y
@@ -64,233 +62,123 @@ sudo yum install -y nsolid
 ...
 node -v && npm -v
 ```
-3.ติดตั้ง Git
+3. ติดตั้ง Git
 ```bash
 sudo yum install -y git
 ...
 git --version
 ```
-4.การนำเข้า Project จาก GitHub
+4. การนำเข้า Project จาก GitHub
 ```bash
 git clone https://github.com/techit6509650419/CS360_Project.git
 ...
 cd CS360_Project
 ```
-5.ติดตั้ง dependencies ของไฟล์ backend
+5.หากไม่มี `.env` ให้สร้างไฟล์ `.env` ในโฟลเดอร์ `backend`
 ```bash
 cd backend
-...
-npm install
+nano .env
 ```
-5.ติดตั้ง dependencies ของไฟล์ client
+- สุ่มค่าต่อไปนี้ใน Terminal เพื่อใช้ในไฟล์ `.env`:
 ```bash
-cd ..
-...
-cd client
-...
-npm install
+#GenerateKeys1
+openssl rand -base64 32
+#GenerateKeys2
+openssl rand -base64 32
+#GenerateKeys3
+openssl rand -base64 32
+#GenerateKeys4
+openssl rand -base64 32
 ```
-6.ติดตั้ง PM2 Runtime
-```bash
-cd ~
-...
-sudo npm install pm2@latest -g
+- คำดลอกค่าที่สุ่มขึ้นมาและวางลงในไฟล์ `.env` ของคุณ:
 ```
-7.แก้ไข ecosystem.config.js
-```bash
-pm2 init
-...
-sudo nano ecosystem.config.js
-...
-#เพิ่มข้อมูล
-module.exports = {
-  apps: [
-    {
-      name: 'ชื่อโปรเจกต์', 
-      cwd: '/home/ec2-user/เส้นทางไปยังโปรเจกต์', 
-      script: 'npm', 
-      args: 'start', 
-      env: {
-        APP_KEYS: 'Key จาก .env ในโปรเจกต์ที่รันบนเครื่องของเรา',
-        API_TOKEN_SALT: 'Salt จาก .env ในโปรเจกต์ที่รันบนเครื่องของเรา',
-        ADMIN_JWT_SECRET: 'Admin Secret จาก .env ในโปรเจกต์ที่รันบนเครื่องของเรา',
-        JWT_SECRET: 'Secret จาก .env ในโปรเจกต์ที่รันบนเครื่องของเรา',
-        NODE_ENV: 'production',
-        DATABASE_CLIENT: 'sqlite',
-        DATABASE_FILENAME: '.tmp/data.db'
-      },
-    },
-  ],
-};
+APP_KEYS=GenerateKeys1
+API_TOKEN_SALT=GenerateKeys2
+ADMIN_JWT_SECRET=GenerateKeys3
+JWT_SECRET=GenerateKeys4
+NODE_ENV=production
+DATABASE_CLIENT=sqlite
+DATABASE_FILENAME=.tmp/data.db
 ```
-8. Start PM2 ให้ Strapi ทำงาน 
+- คำอธิบาย:
+  - `openssl rand -base64 32` จะสร้างค่าที่สุ่มขึ้นมาในรูปแบบ Base64 ขนาด 32 ไบต์ ซึ่งเหมาะสำหรับการใช้เป็นคีย์และโทเค็นต่าง ๆ
+
+6. หากไม่มี `.env` ให้สร้างไฟล์ `.env` ในโฟลเดอร์ `client`
 ```bash
-pm2 start ecosystem.config.js
+cd ../client
+nano .env
 ```
-9. Start Client
+- สุ่มค่าต่อไปนี้ใน Terminal เพื่อใช้ในไฟล์ `.env`:
 ```bash
-cd CS360_Project
-...
-cd client
-...
-npm start
+#GenerateKeys1
+openssl rand -base64 32
+#GenerateKeys2
+openssl rand -base64 32
+```
+- คำดลอกค่าที่สุ่มขึ้นมาและวางลงในไฟล์ `.env` ของคุณ:
+```
+REACT_APP_API_URL=http://<YOUR_IP_ADDRESS>:1337
+REACT_APP_AUTH_TOKEN=GenerateKeys1
+REACT_APP_CLIENT_SECRET=GenerateKeys2
 ```
 
+7. ติดตั้ง dependencies ของไฟล์ backend
+```bash
+cd backend
+npm install
+```
+8. ติดตั้ง dependencies ของไฟล์ client
+```bash
+cd ..
+cd client
+npm install
+```
+9. เริ่มต้นเซิร์ฟเวอร์ของ backend
+```bash
+cd ../backend
+npm run develop
+```
+10. เริ่มต้นเซิร์ฟเวอร์ของ client
+เปิด Terminal ใหม่อีกอันหนึ่ง
+```bash
+cd ../client
+npm start
+```
   
-## How to deploy and run the project using the provided bash script [Specify the bash script path in the repo]
+## How to deploy and run the project using the provided bash script
 
 1.สร้าง AWS EC2 ตามที่ตั้งค่าไว้ และ Connect to EC2 Instance
 ```bash
 ssh -i <your-key.pem> ec2-user@<your-ec2-instance-ip>
 ```
-2.สร้างไฟล์ Bash Script
+2.นำเข้า Project จาก GitHub
 ```bash
-touch namefile.sh
-...
-nano namefile.sh
-...
-#เพิ่มข้อมูล
-#!/bin/bash
-
-#install Node.js and npm
-install_node(){
-    echo "Update the System."
-    sudo yum update -y
-
-    echo "Install the required build tools."
-    sudo yum groupinstall 'Development Tools' -y
-
-    echo "Installing Node.js..."
-    curl -fsSL https://rpm.nodesource.com/setup_20.x | sudo bash -
-    sudo yum install -y nsolid
-
-    echo "Verify Node.js installation."
-    node -v && npm -v
-}
-
-#Install Git
-install_git(){
-    echo "Installing Git..."
-    sudo yum install -y git
-}
-
-#Check for Node.js and npm
-check_node(){
-    echo "Checking for Node.js..."
-    if ! command -v node &> /dev/null
-    then
-        echo "Node.js not found."
-        install_node
-    else
-        echo "Node.js is already install."
-    fi
-}
-
-#Check for Git
-check_git(){
-    echo "Checking for Git..."
-    if ! command -v git &> /dev/null
-    then
-        echo "Git not found."
-        install_git
-    else
-        echo "Git is already install."
-    fi
-}
-
-#Install PM2 runtime
-Install_pm2() {
-    echo "Installing PM2..."
-    sudo npm install pm2@latest -g
-
-    echo "Configuring ecosystem.config.js file..."
-    pm2 init
-
-    echo "Creating ecosystem.config.js..."
-    cat <<EOL > ecosystem.config.js
-module.exports = {
-  apps: [
-    {
-      name: 'backend',
-      cwd: '/home/ec2-user/CS360_Project/backend',
-      script: 'npm',
-      args: 'start',
-      env: {
-        APP_KEYS: 'WClWO74fuhZx1LJF+lNmFw==,gDcSr2p1bMaENJ82cbN9VA==,2SXED6C6p0RxGQMf/SHH6g==,X+sMy1DzMTVjnZ7SCWJybg==',
-        API_TOKEN_SALT: 'gaD8QX66LWUlDD8HGRmhyA==',
-        ADMIN_JWT_SECRET: 'N8ACvVAH79tAWYha5My34Q==',
-        JWT_SECRET: 'qrjLUGQL3RAb9G/Knhwq6A==',
-        NODE_ENV: 'production',
-        DATABASE_CLIENT: 'sqlite',
-        DATABASE_FILENAME: '.tmp/data.db'
-      },
-    },
-  ],
-};
-EOL
-    echo "PM2 installation and configuration complete."
-}
-
-
-#Setup Project
-setup_project(){
-    #Configuration Variables
-    REPO_URL="https://github.com/techit6509650419/CS360_Project.git"
-
-    #Check for Node.js and npm
-    check_node
-
-    #Check for Git
-    check_git
-
-    #Clone the project from GitHub
-    echo "Cloning the repository form $REPO_URL..."
-    git clone $REPO_URL
-    cd CS360_Project
-
-    #Install backend project dependencies
-    cd backend
-    echo "Installing backeend project dependencies..."
-    npm install
-
-    #Install client project denpendencies
-    cd ..
-    cd client
-    echo "Installing client project dependencies..."
-    npm install
-
-    cd ..
-    #install PM2 Runtime
-    Install_pm2
-    
-    echo "Starting backend..."
-    pm2 start ecosystem.config.js
-
-    echo "Starting client..."
-    cd client
-    npm start
-
-    echo "Project setup completed."
-
-}
-
-setup_project
+git clone https://github.com/techit6509650419/CS360_Project.git
+cd CS360_Project
 ```
-3.เปลี่ยนสิทธ์การเข้าถึง
+3.รันสคริปต์ `setup.sh` เพื่อทำการติดตั้งและตั้งค่าทั้งหมด
 ```bash
-chmod +x namefile.sh
+chmod +x setup.sh
+./setup.sh
 ```
-3.รัน Bash Script
+4. รันเซิร์ฟเวอร์ของ backend และ client ใน Terminal ใหม่
 ```bash
-./namefile.sh
+# รัน backend
+cd backend
+npm run develop 
 ```
-
-
-   
+เปิด Terminal ใหม่อีกอันหนึ่ง
+```bash
+ssh -i <your-key.pem> ec2-user@<your-ec2-instance-ip>
+```
+```bash
+# รัน client
+cd ../client
+npm start
+```
   
 [ภาพ screen capture ของหน้าเว็บแอปพลิเคชันซึ่ง deploy ไว้บน EC2]
 ![image](https://github.com/user-attachments/assets/9ecca414-cedc-40fc-b622-29b7ff8e3ba7)
-<<<<<<< HEAD
 
 ## Unit and Integration Testing Overview
 For the tools that our group uses for testing
@@ -400,7 +288,7 @@ nano package.json
 
 ```
 
-- **Front-end (client) past
+- **Front-end (client) past**
 
 4. Enter Folder client
 ```bash
@@ -582,44 +470,13 @@ describe('Register Component - Tests', () => {
         });
     });
 
-     test('successfully logs and navigates to Home Page', async () => {
-        mockFetchResponse({ success: true });
-        
-        // Mock the login function
-        const mockLogin = jest.fn();
-        
-        render(
-            <AuthContext.Provider value={{ login: mockLogin }}>
-                <MemoryRouter initialEntries={['/login']}>
-                    <Routes>
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/" element={<div>Home Page</div>} />
-                    </Routes>
-                </MemoryRouter>
-            </AuthContext.Provider>
-        );
-
-        // Rest of the test remains the same
-        fireEvent.change(screen.getByLabelText(/Username/i), { target: { value: 'user@example.com' } });
-        fireEvent.change(screen.getByLabelText(/^Password$/i), { target: { value: 'Password1!' } });
-
-        fireEvent.click(screen.getByRole('button', { name: /Login/i }));
-
-        await waitFor(() => {
-            expect(screen.getByText(/Home Page/i)).toBeInTheDocument();
-        });
-    });
 });
 ```
 8. Exit Folder client
 ```bash
-cd ..
-
-cd ..
-
-cd ..
+cd ../../..
 ```
-- **backend part
+- **backend part**
 
 1. Create Folder tests in Folder backEnd
 ```bash
@@ -782,9 +639,7 @@ describe('Integration Tests for Account API', () => {
 ```
 3. Exit Folder backend
 ```bash
-cd ..
-
-cd ..
+cd ../..
 ```
 - **github action flie .yml part
   
@@ -893,7 +748,6 @@ npm run test-back
 √ Shows error when passwords do not match
 √ Shows error when required fields are missing
 √ Successfully registers user and navigates to the login page
-√ Successfully registers and navigates to the home page
 ```
 - **Integration Tests** (account.test.js) `backend/tests/account.test.js` Tests for Account API
 
@@ -966,40 +820,34 @@ You can view test results on both GitHub and in your terminal.
 > test-front
 > jest client/src/tests/Register --coverage
 
-  console.log
-    Login successful: { success: true }
-
-      at log (client/src/components/Login/Login.jsx:36:21)
-
- PASS  client/src/tests/Register.test.js
+PASS client/src/tests/Register.test.js
   Register Component - Tests
-    √ renders the register form (75 ms)                                                                                                                                                                           
-    √ shows error when username is shorter than 5 characters (17 ms)                                                                                                                                              
-    √ shows error message for invalid email format (14 ms)                                                                                                                                                        
-    √ shows error for password less than 8 characters (17 ms)                                                                                                                                                     
-    √ shows error for password without uppercase letter (9 ms)                                                                                                                                                    
-    √ shows error for password without a number (22 ms)                                                                                                                                                           
-    √ shows error when passwords do not match (15 ms)                                                                                                                                                             
-    √ shows error when required fields are missing (16 ms)                                                                                                                                                        
-    √ successfully registers user and navigates to login (47 ms)                                                                                                                                                  
-    √ successfully logs and navigates to Home Page (48 ms)                                                                                                                                                        
-                                                                                                                                                                                                                  
--------------------------|---------|----------|---------|---------|--------------------------------                                                                                                               
-File                     | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                                                                                                                             
--------------------------|---------|----------|---------|---------|--------------------------------
-All files                |    81.9 |    70.37 |      85 |   81.25 | 
- src                     |      25 |      100 |       0 |      25 | 
-  AuthContext.js         |      25 |      100 |       0 |      25 | 7-17
- src/components/Login    |      95 |    33.33 |     100 |      95 | 
-  Login.jsx              |      95 |    33.33 |     100 |      95 | 32
- src/components/Register |   84.41 |       75 |     100 |   83.82 | 
-  Register.jsx           |   84.41 |       75 |     100 |   83.82 | 61-62,67-68,72-74,87-88,93,154
--------------------------|---------|----------|---------|---------|--------------------------------
+    ✓ renders the register form (74 ms)
+    ✓ shows error when username is shorter than 5 characters (16 ms)
+    ✓ shows error message for invalid email format (8 ms)
+    ✓ shows error for password less than 8 characters (7 ms)
+    ✓ shows error for password without uppercase letter (6 ms)
+    ✓ shows error for password without a number (7 ms)
+    ✓ shows error when passwords do not match (6 ms)
+    ✓ shows error when required fields are missing (16 ms)
+    ✓ successfully registers user and navigates to login (47 ms)
+
+-------------------------|---------|----------|---------|---------|------------------------------------
+File                     | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                  
+-------------------------|---------|----------|---------|---------|------------------------------------
+All files                |   61.81 |    64.28 |   59.09 |    59.4 |                                    
+ src                     |      25 |      100 |       0 |      25 |                                    
+  AuthContext.js         |      25 |      100 |       0 |      25 | 7-17                               
+ src/components/Login    |    4.34 |        0 |       0 |    4.34 |                                    
+  Login.jsx              |    4.34 |        0 |       0 |    4.34 | 7-73                               
+ src/components/Register |   82.27 |       75 |   92.85 |   81.42 |                                    
+  Register.jsx           |   82.27 |       75 |   92.85 |   81.42 | 62-63,68-69,73-75,88-89,98-108,169 
+-------------------------|---------|----------|---------|---------|------------------------------------
 Test Suites: 1 passed, 1 total
-Tests:       10 passed, 10 total
+Tests:       9 passed, 9 total
 Snapshots:   0 total
-Time:        1.999 s, estimated 3 s
-Ran all test suites matching /client\\src\\tests\\Register/i.
+Time:        1.277 s, estimated 2 s
+Ran all test suites matching /client\/src\/tests\/Register/i.
 ```
 - Run `npm run test-back -- --coverage` to view feature Account test result output:
 

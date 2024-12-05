@@ -4,10 +4,12 @@ on:
   push:
     branches: 
       - '*'
+      - develop-CI/CD
   pull_request:
     branches:
       - '*'
-
+      - develop-CI/CD
+      
 jobs:
   Run-npm:
     runs-on: ${{ matrix.os }}
@@ -32,6 +34,9 @@ jobs:
     # Install project dependencies
     - name: Install project dependencies
       run: npm install --force
+
+    - name : Install sweetaler2
+      run : npm install sweetalert2 --force
 
     # Rebuild sqlite3 (if necessary)
     - name: Rebuild sqlite3

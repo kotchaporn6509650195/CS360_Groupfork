@@ -1,4 +1,6 @@
 import { useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { FaUserCircle } from "react-icons/fa";
 
 import "./Home.scss";
 
@@ -9,7 +11,9 @@ import { Context } from "../../utils/context";
 import Products from "../Products/Products";
 
 const Home = () => {
-    const {categories,setCategories, products, setProducts} = useContext(Context);
+    const {categories,setCategories, products, setProducts, user} = useContext(Context);
+    const navigate = useNavigate();
+
     useEffect(()=>{
         getProducts();
         getCategories();    
@@ -40,6 +44,12 @@ const Home = () => {
             <Category categories={categories}/>
             <Products products={products} headingText="Popular Products"/>
             </div>
+            {user && (
+                <div className="user-info">
+                    <span className="username">{"Hello " + user.username}</span>
+                    <FaUserCircle onClick={() => navigate("/profile")} />
+                </div>
+            )}
         </div>   
     </div>;
 };

@@ -9,19 +9,19 @@ const Login = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const { login } = useContext(AuthContext);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_DEV_URL}/api/auth/local`, { // Adjust the URL if needed
+            const response = await fetch(`${process.env.REACT_APP_DEV_URL}/api/auth/local`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    identifier: username, // Use identifier for username or email
+                    identifier: username,
                     password,
                 }),
             });
@@ -32,10 +32,10 @@ const Login = () => {
                 throw new Error(data.message || 'Failed to login');
             }
 
-            // Handle successful login
-            console.log('Login successful:', data); // Log user data if needed
-            navigate('/'); // Redirect to the home page or dashboard
-            login({ username: data.user.username }); // Adjust according to your API response
+            localStorage.setItem('token', data.jwt);
+            login({ username: data.user.username });
+            setIsLoggedIn(true);
+            navigate('/');
         } catch (err) {
             setError(err.message);
         }
@@ -69,10 +69,13 @@ const Login = () => {
                 </div>
                 {error && <p className="error">{error}</p>}
                 <button type="submit">Login</button>
+                {isLoggedIn && (
+                    <button onClick={() => navigate('/profile')}>View Profile</button>
+                )}
                 <div className="links">
                     <a href="/reset-password">Forgot Password?</a>
                     <span> | </span>
-                    <a href="/register">Create an Account</a> {/* Note: Changed to lowercase 'register' */}
+                    <a href="/register">Create an Account</a>
                 </div>
             </form>
         </div>

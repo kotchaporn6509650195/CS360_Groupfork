@@ -1,3 +1,4 @@
+
 @import "../../css-config/mixins.scss";
 
 .main-header{
@@ -135,6 +136,22 @@
         &:hover {
             background-color: #c82333;
         }
+    }
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .username {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    svg {
+        cursor: pointer;
+        font-size: 24px;
     }
 }
 

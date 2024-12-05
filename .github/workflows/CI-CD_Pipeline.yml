@@ -1,0 +1,171 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - '*'
+      - develop-CI/CD
+
+jobs:
+  CI_backend:
+    name: CI - Backend Docker Build and Testing
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+      
+      - name: Build Backend Docker Image
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/cs360_backend_image_test:latest -f backend/Dockerfile .
+
+      - name: Push Backend Docker Image
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/cs360_backend_image_test:latest
+
+
+      - name: Pull and Run Backend Container
+        run: |
+          docker pull ${{ secrets.DOCKER_USERNAME }}/cs360_backend_image_test:latest
+          docker run -d --name test-backend-container \
+            --memory="8g" \
+            --memory-swap="16g" \
+            ${{ secrets.DOCKER_USERNAME }}/cs360_backend_image_test:latest \
+            tail -f /dev/null
+      
+      - name: Run Backend Tests
+        run: |
+          docker ps
+
+          docker exec test-backend-container sh -c "npm install --force && npm run test"
+
+      - name: Backend Cleanup
+        if: always()
+        run: |
+          docker stop test-backend-container || true
+          docker rm test-backend-container || true
+
+  CI-frontend:
+    name: CI - Frontend Docker Build and Testing
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Build Frontend Docker Image
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/cs360_frontend_image_test:latest -f client/Dockerfile .
+          
+      - name: Push Frontend Docker Image
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/cs360_frontend_image_test:latest
+      
+      - name: Pull and Run Frontend Container
+        run: |
+          docker pull ${{ secrets.DOCKER_USERNAME }}/cs360_frontend_image_test:latest
+          docker run -d --name test-frontend-container \
+            --memory="8g" \
+            --memory-swap="16g" \
+            ${{ secrets.DOCKER_USERNAME }}/cs360_frontend_image_test:latest \
+            tail -f /dev/null
+
+      - name: Install Dependencies and Run Frontend Tests
+        run: |
+          docker exec test-frontend-container sh -c "npm install --force && npm install sweetalert2 --force && npm run test"
+
+      - name: Frontend Cleanup
+        if: always()
+        run: |
+          docker stop test-frontend-container || true
+          docker rm test-frontend-container || true
+
+  CD:
+    name: CD - Deploy to EC2 with Docker
+    runs-on: ubuntu-latest
+    needs:
+      - CI_backend
+      - CI-frontend
+    steps:
+      # Step 1: Checkout code
+      - name: Checkout Repository
+        uses: actions/checkout@v3    
+
+      # Step 2: Check if Docker Images Exist
+      - name: Check if Docker Images Exist
+        id: check_images
+        run: |
+          # Check if the client Docker image exists
+          CLIENT_REPOSITORY="${{ secrets.DOCKER_USERNAME }}/cs360_frontend_image_test"  # Replace with your DockerHub repository name
+          CLIENT_TAG="latest"
+          CLIENT_RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" -u "${{ secrets.DOCKER_USERNAME }}:${{ secrets.DOCKER_TOKEN }}" https://hub.docker.com/v2/repositories/${CLIENT_REPOSITORY}/tags/${CLIENT_TAG}/)
+          if [ "$CLIENT_RESPONSE" -ne 200 ]; then
+              echo "Client Docker image not found. Exiting workflow."
+              exit 1
+          fi
+          echo "Client Docker image exists."
+
+          # Check if the backend Docker image exists
+          BACKEND_REPOSITORY="${{ secrets.DOCKER_USERNAME }}/cs360_backend_image_test"  # Replace with your DockerHub repository name
+          BACKEND_TAG="latest"
+          BACKEND_RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" -u "${{ secrets.DOCKER_USERNAME }}:${{ secrets.DOCKER_TOKEN }}" https://hub.docker.com/v2/repositories/${BACKEND_REPOSITORY}/tags/${BACKEND_TAG}/)
+          if [ "$BACKEND_RESPONSE" -ne 200 ]; then
+              echo "Backend Docker image not found. Exiting workflow."
+              exit 1
+          fi
+          echo "Backend Docker image exists. Proceeding to deployment."
+
+      # Step 3: Set AWS Credentials in Environment Variables
+      - name: Set AWS Credentials
+        if: ${{ steps.check_images.outcome == 'success' }}
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+        run: echo "AWS credentials set."
+
+      # Step 4: Create EC2 Instance and Deploy the Application
+      - name: Create EC2 Instance and Deploy the Application
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+        run: |
+          # Define instance details
+          INSTANCE_ID=$(aws ec2 run-instances \
+            --image-id ami-06b21ccaeff8cd686 \
+            --instance-type t2.medium \
+            --key-name ${{ secrets.AWS_KP_NAME }} \
+            --security-group-ids ${{ secrets.AWS_SG_ID }} \
+            --user-data file://user-data.sh \
+            --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=MyInstanceName}]' \
+            --query 'Instances[0].InstanceId' \
+            --output text)
+
+          if [ -z "$INSTANCE_ID" ]; then
+            echo "Failed to create EC2 instance" >&2
+          exit 1
+          fi
+
+          echo "Instance ID: $INSTANCE_ID"
+          
+
+          # Wait for the instance to be running
+          aws ec2 wait instance-running --instance-ids $INSTANCE_ID
+
+          # Output the instance public IP
+          INSTANCE_PUBLIC_IP=$(aws ec2 describe-instances \
+            --instance-ids $INSTANCE_ID \
+            --query 'Reservations[0].Instances[0].PublicIpAddress' \
+            --output text)
+          echo "Instance Public IP: $INSTANCE_PUBLIC_IP"

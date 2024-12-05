@@ -4,6 +4,7 @@ import { TbSearch } from "react-icons/tb";
 import { CgShoppingCart } from "react-icons/cg";
 import { AiOutlineHeart } from "react-icons/ai";
 import { AuthContext } from '../../AuthContext';
+import { FaUserCircle } from "react-icons/fa";
 
 import Search from "./Search/Search";
 import Cart from "../Cart/Cart";
@@ -44,8 +45,8 @@ const Header = () => {
             <div className="header-content">
                 <ul className="left">
                     <li onClick={() => navigate("/")}>Home</li>
-                    <li>About</li>
-                    <li>Categories</li>
+                    <li onClick={() => navigate("/about")}>About</li>
+                    <li onClick={() => navigate("/categories")}>Categories</li>
                 </ul>
                 <div className="center" onClick={() => navigate("/")}>ECOMIFY</div>
                 <div className="right">
@@ -57,7 +58,8 @@ const Header = () => {
                     </span>
                     {user ? (
                         <div className="user-menu">
-                            <span className="username">{user.username}</span>
+                            <span className="username">{"Hello " + user.username}</span>
+                            <FaUserCircle onClick={() => navigate("/profile")} />
                             <button className="logout-btn" onClick={handleLogout}>
                                 Logout
                             </button>
