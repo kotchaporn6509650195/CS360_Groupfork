@@ -153,6 +153,8 @@ ssh -i <your-key.pem> ec2-user@<your-ec2-instance-ip>
 ```
 2.นำเข้า Project จาก GitHub
 ```bash
+sudo yum install -y git
+git --version
 git clone https://github.com/techit6509650419/CS360_Project.git
 cd CS360_Project
 ```
