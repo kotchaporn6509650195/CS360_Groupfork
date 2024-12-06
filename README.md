@@ -141,7 +141,8 @@ npm run develop
 10. เริ่มต้นเซิร์ฟเวอร์ของ client
 เปิด Terminal ใหม่อีกอันหนึ่ง
 ```bash
-cd ../client
+cd CS360_Project
+cd client
 npm start
 ```
   
