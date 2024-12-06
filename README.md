@@ -173,7 +173,8 @@ ssh -i <your-key.pem> ec2-user@<your-ec2-instance-ip>
 ```
 ```bash
 # รัน client
-cd ../client
+cd CS360_Project
+cd client
 npm start
 ```
   
